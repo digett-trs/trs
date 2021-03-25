@@ -6,7 +6,7 @@ const Page = ({ data }) => {
   const node = data.page
   return (
     <div>
-      <h1>Tester</h1>
+      <h1>{node.title}</h1>
     </div>
   )
 }
