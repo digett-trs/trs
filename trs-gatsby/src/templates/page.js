@@ -1,12 +1,22 @@
 import React from "react"
 import { graphql } from "gatsby"
-// Sort and display the different slice options
+import BlockContent from '@sanity/block-content-to-react'
+
+// const serializers = {
+//   types: {
+//     image: props => (
+//       <div>{console.log(props)}</div>
+//     )
+//   }
+// }
 
 const Page = ({ data }) => {
   const node = data.page
+  console.log(node.body)
   return (
     <div>
       <h1>{node.title}</h1>
+      <BlockContent blocks={node.body} />
     </div>
   )
 }
@@ -19,6 +29,18 @@ export const postQuery = graphql`
         current
       }
       title
+      body {
+        _type
+        _rawChildren
+        _key
+        style
+        children {
+          text
+          marks
+          _type
+          _key
+        }
+      }
     }
   }
 `
