@@ -1314,6 +1314,10 @@
     slate "^0.58.4"
     styled-components "^5.0.0"
 
+"@sanity/production-preview@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.npmjs.org/@sanity/production-preview/-/production-preview-2.2.6.tgz#3c92cf26d4b7c66ebd69cd80c94be09519aa9231"
+
 "@sanity/react-hooks@2.7.1":
   version "2.7.1"
   resolved "https://registry.npmjs.org/@sanity/react-hooks/-/react-hooks-2.7.1.tgz#02d4431079d863fd0c60dc404cb2c6674b84d902"
