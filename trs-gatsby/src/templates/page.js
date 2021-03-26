@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import BlockContent from '@sanity/block-content-to-react'
+import BlockContent from "@sanity/block-content-to-react"
 
 // const serializers = {
 //   types: {
@@ -14,7 +14,14 @@ const Page = ({ data }) => {
   const node = data.page
   console.log(node.body)
   return (
-    <div>
+    <div
+      style={{
+        width: "80%",
+        margin: "0 auto",
+        maxWidth: "600px",
+        padding: "30px 0px",
+      }}
+    >
       <h1>{node.title}</h1>
       <BlockContent blocks={node.body} />
     </div>
@@ -24,8 +31,8 @@ export default Page
 
 export const postQuery = graphql`
   query PageBySlug($slug: String!) {
-    page: sanityPage(slug: {current:{ eq: $slug }}){
-      slug{
+    page: sanityPage(slug: { current: { eq: $slug } }) {
+      slug {
         current
       }
       title
