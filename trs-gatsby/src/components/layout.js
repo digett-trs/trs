@@ -1,16 +1,11 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
+/** @jsx jsx */
+import { jsx } from "theme-ui"
 import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-
 import Header from "./header"
 import "./layout.css"
+import { useColorMode } from "theme-ui"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -22,14 +17,19 @@ const Layout = ({ children }) => {
       }
     }
   `)
+  const [colorMode, setColorMode] = useColorMode()
+
+  const nextColorMode = colorMode === "light" ? "dark" : "light"
 
   return (
     <>
       <div
-        style={{
-          margin: `0 auto`,
+        sx={{
+          // this uses the value from `theme.space[4]`
+          padding: 3,
           maxWidth: 600,
-          padding: `0 1.0875rem 1.45rem`,
+          margin: "0 auto",
+          // these use values from `theme.colors`
         }}
       >
         <main>{children}</main>
@@ -41,6 +41,16 @@ const Layout = ({ children }) => {
           © {new Date().getFullYear()}, Built by
           {` `}
           <a href="https://digett.com">Digett</a>
+          <button
+            sx={{
+              marginLeft: 20,
+            }}
+            onClick={e => {
+              setColorMode(nextColorMode)
+            }}
+          >
+            Change color mode
+          </button>
         </footer>
       </div>
     </>

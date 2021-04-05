@@ -1,5 +1,5 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
@@ -44,11 +44,13 @@ module.exports = {
 
         // If the Sanity GraphQL API was deployed using `--tag <name>`,
         // use `graphqlTag` to specify the tag name. Defaults to `default`.
-        graphqlTag: 'default',
+        graphqlTag: "default",
         overlayDrafts: true,
-        watchMode: true
+        watchMode: true,
       },
     },
+    "gatsby-plugin-theme-ui",
+    // require.resolve(`./digett-source-reso-plugin`),
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
