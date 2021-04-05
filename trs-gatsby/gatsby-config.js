@@ -50,7 +50,7 @@ module.exports = {
       },
     },
     "gatsby-plugin-theme-ui",
-    // require.resolve(`./digett-source-reso-plugin`),
+    require.resolve(`./digett-source-reso-plugin`),
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
