@@ -1,3 +1,4 @@
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -5,8 +6,8 @@ exports.createPages = async ({ graphql, actions }) => {
     {
       page: allSanityPage {
         nodes {
-          slug{
-              current
+          slug {
+            current
           }
         }
       }

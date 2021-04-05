@@ -15,17 +15,17 @@ export default {
       title: "Slug",
     },
     {
-      title: 'Body',
-      name: 'body',
-      type: 'array',
+      title: "Body",
+      name: "body",
+      type: "array",
       of: [
         {
-          type: 'block'
+          type: "block",
         },
         {
-          type: 'image'
-        }
-      ]
-    }
+          type: "image",
+        },
+      ],
+    },
   ],
 };
