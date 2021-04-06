@@ -4,8 +4,8 @@ require("dotenv").config({
 })
 var clientSettings = {
   loginUrl: "http://rets2.navicamls.net/login.aspx",
-  username: process.env.RETS_IDX_USER,
-  password: process.env.RETS_IDX_PW,
+  username: process.env.RETS_KERRVILLE_USER,
+  password: process.env.RETS_KERRVILLE_PW,
   version: "RETS/1.7.2",
   userAgent: "RETS node-client/4.x",
   method: "GET", // this is the default, or for some servers you may want 'POST'
@@ -19,19 +19,16 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   // const { db, results } = await query(conn, queries)
   const data = await fetchProperties(createNode, createNodeId, getCache)
   data.forEach(property => {
-    console.log(property)
     createNode({
       ...property,
       id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
       parent: null,
       children: property.imageids,
       internal: {
-        type: "Property",
+        type: "PropertyKerrville",
         content: "content",
         contentDigest: "content digest",
       },
-      imagesnow: "image please2!",
-      imagetester: "now2",
     })
   })
 }
@@ -52,8 +49,9 @@ function fetchProperties(createNode, createNodeId, getCache) {
           }
         )
         .then(function (searchData) {
-          var imageIds = []
+
           searchData.results.forEach((property, index, array) => {
+            var imageIds = []
             client.objects
               .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
               .then(async function (photoResults) {
@@ -64,14 +62,12 @@ function fetchProperties(createNode, createNodeId, getCache) {
                     )
                   } else {
                     if (photoResults.objects[i].data) {
-                      console.log("photoloop")
                       var imageNode = await createFileNodeFromBuffer({
                         buffer: photoResults.objects[i].data,
                         getCache: getCache,
                         createNode: createNode,
                         createNodeId: createNodeId,
                       })
-                      console.log(imageNode.id)
                       imageIds.push(imageNode.id)
                     }
                   }
@@ -82,8 +78,6 @@ function fetchProperties(createNode, createNodeId, getCache) {
                 }
               })
               .then(function () {
-                console.log(index)
-                console.log(array.length)
                 if (index === array.length - 1) resolve(properties)
               })
           })
@@ -92,21 +86,4 @@ function fetchProperties(createNode, createNodeId, getCache) {
   })
 }
 
-function fetchImages(createNode, property) {
-  console.log("fetch-images")
-  console.log(property.MST_MLS_NUMBER)
-  const client = rets.getAutoLogoutClient(clientSettings)
-  client.objects
-    .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
-    .then(function (photoResults) {
-      for (var i = 0; i < photoResults.objects.length; i++) {
-        if (photoResults.objects[i].error) {
-          console.log("      Error2: " + photoResults.objects[i].error)
-        } else {
-          if (photoResults.objects[i].data) {
-            console.log(photoResults.objects[i])
-          }
-        }
-      }
-    })
-}
+

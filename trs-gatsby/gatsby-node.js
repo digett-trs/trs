@@ -11,12 +11,6 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      property: allProperty {
-        nodes {
-          id
-          MST_MLS_NUMBER
-        }
-      }
     }
   `)
   const pageTemplate = path.resolve("src/templates/page.js")
@@ -39,14 +33,23 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
-  const propertyTemplate = path.resolve("src/templates/property.js")
-  pages.data.property.nodes.forEach(node => {
-    createPage({
-      path: `/property/${node.MST_MLS_NUMBER}`,
-      component: propertyTemplate,
-      context: {
-        id: node.id,
-      },
-    })
-  })
+  // const propertyTemplate = path.resolve("src/templates/property.js")
+  // pages.data.propertyidx.nodes.forEach(node => {
+  //   createPage({
+  //     path: `/property-idx/${node.MST_MLS_NUMBER}`,
+  //     component: propertyTemplate,
+  //     context: {
+  //       id: node.id,
+  //     },
+  //   })
+  // })
+  // pages.data.propertykerrville.nodes.forEach(node => {
+  //   createPage({
+  //     path: `/property-kerrville/${node.MST_MLS_NUMBER}`,
+  //     component: propertyTemplate,
+  //     context: {
+  //       id: node.id,
+  //     },
+  //   })
+  // })
 }
