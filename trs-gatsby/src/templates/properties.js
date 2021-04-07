@@ -20,6 +20,32 @@ const Properties = props => {
           </li>
         ))}
       </ul>
+      <div className="pager-previous-container">
+        {!isFirst && (
+          <Link to={"/property" + prevPage} rel="prev">
+            Prev
+          </Link>
+        )}
+      </div>
+
+      <div className="pager-container">
+        {Array.from({ length: numPages }, (_, i) => (
+          <Link
+            className="pager-link"
+            key={`pagination-number${i + 1}`}
+            to={`/property${i === 0 ? "" : "/" + (i + 1)}`}
+          >
+            {i + 1}
+          </Link>
+        ))}
+      </div>
+      <div className="pager-next-container">
+        {!isLast && (
+          <Link to={"/property/" + nextPage} rel="next">
+            Next
+          </Link>
+        )}
+      </div>
     </Layout>
   )
 }
