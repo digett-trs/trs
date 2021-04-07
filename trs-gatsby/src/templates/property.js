@@ -6,28 +6,28 @@ import Layout from "../components/layout"
 import { jsx } from "theme-ui"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 const Property = ({ data }) => {
-    const node = data.property
-    console.log(node)
-    const images = node.childrenFile
-    return (
-        <Layout>
-            <div>
-                <h1>{node.MST_MLS_NUMBER}</h1>
-                {images.map((image, index) => (
-                    <div>
-                        <GatsbyImage image={image.childImageSharp.gatsbyImageData} />
-                    </div>
-                ))}
-            </div>
-        </Layout>
-    )
+  const node = data.property
+  console.log(node)
+  const images = node.childrenFile
+  return (
+    <Layout>
+      <div>
+        <h1>{node.mlsid}</h1>
+        {images.map((image, index) => (
+          <div>
+            <GatsbyImage image={image.childImageSharp.gatsbyImageData} />
+          </div>
+        ))}
+      </div>
+    </Layout>
+  )
 }
 export default Property
 
 export const postQuery = graphql`
   query PropertyBySlug($id: String!) {
-    idx: propertyIdx(id: { eq: $id }) {
-      MST_MLS_NUMBER
+    property: property(id: { eq: $id }) {
+      mlsid
       childrenFile {
         childImageSharp {
           gatsbyImageData(
@@ -38,17 +38,5 @@ export const postQuery = graphql`
         }
       }
     }
-    kerrville: propertyKerrville(id: { eq: $id }) {
-        MST_MLS_NUMBER
-        childrenFile {
-          childImageSharp {
-            gatsbyImageData(
-              width: 600
-              placeholder: BLURRED
-              formats: [AUTO, WEBP, AVIF]
-            )
-          }
-        }
-      }
   }
 `

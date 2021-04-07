@@ -11,16 +11,10 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-     idx: allPropertyIdx {
+      property: allProperty {
         nodes {
           id
-          MST_MLS_NUMBER
-        }
-      }
-      kerrville: allPropertyKerrville {
-        nodes {
-          id
-          MST_MLS_NUMBER
+          mlsid
         }
       }
     }
@@ -46,21 +40,27 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   })
   const propertyTemplate = path.resolve("src/templates/property.js")
-  pages.data.idx.nodes.forEach(node => {
+  pages.data.property.nodes.forEach(node => {
     createPage({
-      path: `/property-idx/${node.MST_MLS_NUMBER}`,
+      path: `/property/${node.mlsid}`,
       component: propertyTemplate,
       context: {
         id: node.id,
       },
     })
   })
-  pages.data.kerrville.nodes.forEach(node => {
+  const postsPerPage = 6
+  const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  const insightsTemplate = path.resolve("src/templates/properties.js")
+  Array.from({ length: numPages }).forEach((_, i) => {
     createPage({
-      path: `/property-kerrville/${node.MST_MLS_NUMBER}`,
-      component: propertyTemplate,
+      path: i === 0 ? `/property` : `/property/${i + 1}`,
+      component: insightsTemplate,
       context: {
-        id: node.id,
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
       },
     })
   })
