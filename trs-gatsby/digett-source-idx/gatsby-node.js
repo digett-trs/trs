@@ -80,10 +80,7 @@ function fetchPropertiesSabor(createNode, createNodeId, getCache) {
         .query(
           "Property",
           "FR",
-          "(L_Status_N=|ACT,NEW),(L_AskingPrice=750000+)",
-          {
-            limit: 1,
-          }
+          "(L_Status_N=|ACT,NEW),(L_AskingPrice=750000+)"
         )
 
         .then(async function (searchData) {
@@ -166,14 +163,7 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query(
-          "Property",
-          "LAND",
-          "(List_Price=750000+),(rets_status=Active)",
-          {
-            limit: 1,
-          }
-        )
+        .query("Property", "LAND", "(List_Price=750000+),(rets_status=Active)")
         .then(async function (searchData) {
           const props = await getPropsNavi(
             client,
@@ -201,14 +191,7 @@ function fetchPropertiesIdx(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query(
-          "Property",
-          "LAND",
-          "(List_Price=750000+),(rets_status=Active)",
-          {
-            limit: 1,
-          }
-        )
+        .query("Property", "LAND", "(List_Price=750000+),(rets_status=Active)")
         .then(async function (searchData) {
           const props = await getPropsNavi(
             client,
