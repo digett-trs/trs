@@ -31,6 +31,7 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
       },
     })
   })
+  return
 }
 
 function fetchProperties(createNode, createNodeId, getCache) {
@@ -49,7 +50,6 @@ function fetchProperties(createNode, createNodeId, getCache) {
           }
         )
         .then(function (searchData) {
-
           searchData.results.forEach((property, index, array) => {
             var imageIds = []
             client.objects
@@ -85,5 +85,3 @@ function fetchProperties(createNode, createNodeId, getCache) {
     })
   })
 }
-
-
