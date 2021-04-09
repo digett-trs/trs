@@ -7,44 +7,44 @@ var fs = require("fs")
 
 exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   const { createNode } = actions
-  const idxdata = await fetchPropertiesIdx(createNode, createNodeId, getCache)
-  const kerrvilledata = await fetchPropertiesKerrville(
-    createNode,
-    createNodeId,
-    getCache
-  )
+  // const idxdata = await fetchPropertiesIdx(createNode, createNodeId, getCache)
+  // const kerrvilledata = await fetchPropertiesKerrville(
+  //   createNode,
+  //   createNodeId,
+  //   getCache
+  // )
 
   const sabordata = await fetchPropertiesSabor(
     createNode,
     createNodeId,
     getCache
   )
-  idxdata.forEach(property => {
-    createNode({
-      id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
-      parent: null,
-      children: property.imageids,
-      internal: {
-        type: "property",
-        content: "content",
-        contentDigest: "content digest",
-      },
-      mlsid: property.MST_MLS_NUMBER,
-    })
-  })
-  kerrvilledata.forEach(property => {
-    createNode({
-      id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
-      parent: null,
-      children: property.imageids,
-      internal: {
-        type: "property",
-        content: "content",
-        contentDigest: "content digest",
-      },
-      mlsid: property.MST_MLS_NUMBER,
-    })
-  })
+  // idxdata.forEach(property => {
+  //   createNode({
+  //     id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
+  //     parent: null,
+  //     children: property.imageids,
+  //     internal: {
+  //       type: "property",
+  //       content: "content",
+  //       contentDigest: "content digest",
+  //     },
+  //     mlsid: property.MST_MLS_NUMBER,
+  //   })
+  // })
+  // kerrvilledata.forEach(property => {
+  //   createNode({
+  //     id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
+  //     parent: null,
+  //     children: property.imageids,
+  //     internal: {
+  //       type: "property",
+  //       content: "content",
+  //       contentDigest: "content digest",
+  //     },
+  //     mlsid: property.MST_MLS_NUMBER,
+  //   })
+  // })
   sabordata.forEach(property => {
     createNode({
       id: createNodeId(`Property-${property.L_ListingID}`),
@@ -124,6 +124,7 @@ function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
     .getAllObjects("Property", "Photo", property.L_ListingID)
     .then(async function (photoResults) {
       if (photoResults.objects) {
+        console.log('Sabor image count for mlsid: ' + property.L_ListingID + '=' + photoResults.objects.length)
         for (var i = 0; i < photoResults.objects.length; i++) {
           if (photoResults.objects[i].error) {
             console.log("      Error2: " + photoResults.objects[i].error)
@@ -143,6 +144,7 @@ function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
           }
         }
       } else {
+        console.log('no images')
         return null
       }
     })
