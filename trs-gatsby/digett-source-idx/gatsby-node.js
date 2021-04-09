@@ -8,17 +8,17 @@ var fs = require("fs")
 exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   const { createNode } = actions
   const idxdata = await fetchPropertiesIdx(createNode, createNodeId, getCache)
-  const kerrvilledata = await fetchPropertiesKerrville(
-    createNode,
-    createNodeId,
-    getCache
-  )
+  // const kerrvilledata = await fetchPropertiesKerrville(
+  //   createNode,
+  //   createNodeId,
+  //   getCache
+  // )
 
-  const sabordata = await fetchPropertiesSabor(
-    createNode,
-    createNodeId,
-    getCache
-  )
+  // const sabordata = await fetchPropertiesSabor(
+  //   createNode,
+  //   createNodeId,
+  //   getCache
+  // )
   idxdata.forEach(property => {
     createNode({
       id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
@@ -32,32 +32,32 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
       mlsid: property.MST_MLS_NUMBER,
     })
   })
-  kerrvilledata.forEach(property => {
-    createNode({
-      id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
-      parent: null,
-      children: property.imageids,
-      internal: {
-        type: "property",
-        content: "content",
-        contentDigest: "content digest",
-      },
-      mlsid: property.MST_MLS_NUMBER,
-    })
-  })
-  sabordata.forEach(property => {
-    createNode({
-      id: createNodeId(`Property-${property.L_ListingID}`),
-      parent: null,
-      children: property.imageids,
-      internal: {
-        type: "property",
-        content: "content",
-        contentDigest: "content digest",
-      },
-      mlsid: property.L_ListingID,
-    })
-  })
+  // kerrvilledata.forEach(property => {
+  //   createNode({
+  //     id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
+  //     parent: null,
+  //     children: property.imageids,
+  //     internal: {
+  //       type: "property",
+  //       content: "content",
+  //       contentDigest: "content digest",
+  //     },
+  //     mlsid: property.MST_MLS_NUMBER,
+  //   })
+  // })
+  // sabordata.forEach(property => {
+  //   createNode({
+  //     id: createNodeId(`Property-${property.L_ListingID}`),
+  //     parent: null,
+  //     children: property.imageids,
+  //     internal: {
+  //       type: "property",
+  //       content: "content",
+  //       contentDigest: "content digest",
+  //     },
+  //     mlsid: property.L_ListingID,
+  //   })
+  // })
 
   return
 }
