@@ -7,18 +7,19 @@ var fs = require("fs")
 
 exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   const { createNode } = actions
-  const idxdata = await fetchPropertiesIdx(createNode, createNodeId, getCache)
-  // const kerrvilledata = await fetchPropertiesKerrville(
-  //   createNode,
-  //   createNodeId,
-  //   getCache
-  // )
+  const kerrvilledata = await fetchPropertiesKerrville(
+    createNode,
+    createNodeId,
+    getCache
+  )
 
-  // const sabordata = await fetchPropertiesSabor(
-  //   createNode,
-  //   createNodeId,
-  //   getCache
-  // )
+  const sabordata = await fetchPropertiesSabor(
+    createNode,
+    createNodeId,
+    getCache
+  )
+  const idxdata = await fetchPropertiesIdx(createNode, createNodeId, getCache)
+
   idxdata.forEach(property => {
     createNode({
       id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
@@ -32,39 +33,39 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
       mlsid: property.MST_MLS_NUMBER,
     })
   })
-  // kerrvilledata.forEach(property => {
-  //   createNode({
-  //     id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
-  //     parent: null,
-  //     children: property.imageids,
-  //     internal: {
-  //       type: "property",
-  //       content: "content",
-  //       contentDigest: "content digest",
-  //     },
-  //     mlsid: property.MST_MLS_NUMBER,
-  //   })
-  // })
-  // sabordata.forEach(property => {
-  //   createNode({
-  //     id: createNodeId(`Property-${property.L_ListingID}`),
-  //     parent: null,
-  //     children: property.imageids,
-  //     internal: {
-  //       type: "property",
-  //       content: "content",
-  //       contentDigest: "content digest",
-  //     },
-  //     mlsid: property.L_ListingID,
-  //   })
-  // })
+  kerrvilledata.forEach(property => {
+    createNode({
+      id: createNodeId(`Property-${property.MST_MLS_NUMBER}`),
+      parent: null,
+      children: property.imageids,
+      internal: {
+        type: "property",
+        content: "content",
+        contentDigest: "content digest",
+      },
+      mlsid: property.MST_MLS_NUMBER,
+    })
+  })
+  sabordata.forEach(property => {
+    createNode({
+      id: createNodeId(`Property-${property.L_ListingID}`),
+      parent: null,
+      children: property.imageids,
+      internal: {
+        type: "property",
+        content: "content",
+        contentDigest: "content digest",
+      },
+      mlsid: property.L_ListingID,
+    })
+  })
 
   return
 }
 
 function fetchPropertiesSabor(createNode, createNodeId, getCache) {
   console.log("fetch sab3")
-  var clientSettings = {
+  const clientSettings = {
     loginUrl: "http://sabor-rets.connectmls.com/rets/server/login",
     username: process.env.RETS_SABOR_USER,
     password: process.env.RETS_SABOR_PW,
@@ -72,7 +73,6 @@ function fetchPropertiesSabor(createNode, createNodeId, getCache) {
     userAgent: "RETS node-client/4.x",
     method: "GET", // this is the default, or for some servers you may want 'POST'
   }
-  var properties = []
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
@@ -104,7 +104,7 @@ async function getPropsSabor(
   createNodeId,
   getCache
 ) {
-  var properties = []
+  const properties = []
   await Promise.all(
     searchData.results.map(async property => {
       const myobjects = await getObjectsSabor(
@@ -128,16 +128,16 @@ function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
       if (photoResults.objects) {
         console.log(
           "Sabor image count for mlsid: " +
-            property.L_ListingID +
-            "=" +
-            photoResults.objects.length
+          property.L_ListingID +
+          "=" +
+          photoResults.objects.length
         )
         for (var i = 0; i < photoResults.objects.length; i++) {
           if (photoResults.objects[i].error) {
             console.log("      Error2: " + photoResults.objects[i].error)
           } else {
             if (photoResults.objects[i].data) {
-              var imageNode = await createFileNodeFromBuffer({
+              const imageNode = await createFileNodeFromBuffer({
                 buffer: photoResults.objects[i].data,
                 getCache: getCache,
                 createNode: createNode,
@@ -158,7 +158,7 @@ function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
 
 function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
   console.log("fetch kerrville")
-  var clientSettings = {
+  const clientSettings = {
     loginUrl: "http://rets2.navicamls.net/login.aspx",
     username: process.env.RETS_KERRVILLE_USER,
     password: process.env.RETS_KERRVILLE_PW,
@@ -166,7 +166,6 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
     userAgent: "RETS node-client/4.x",
     method: "GET", // this is the default, or for some servers you may want 'POST'
   }
-  var properties = []
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
@@ -189,7 +188,7 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
 }
 function fetchPropertiesIdx(createNode, createNodeId, getCache) {
   console.log("fetch idx")
-  var clientSettings = {
+  const clientSettings = {
     loginUrl: "http://rets2.navicamls.net/login.aspx",
     username: process.env.RETS_IDX_USER,
     password: process.env.RETS_IDX_PW,
@@ -197,7 +196,6 @@ function fetchPropertiesIdx(createNode, createNodeId, getCache) {
     userAgent: "RETS node-client/4.x",
     method: "GET", // this is the default, or for some servers you may want 'POST'
   }
-  var properties = []
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
@@ -225,7 +223,7 @@ async function getPropsNavi(
   createNodeId,
   getCache
 ) {
-  var properties = []
+  const properties = []
   await Promise.all(
     searchData.results.map(async property => {
       const myobjects = await getObjectsNavi(
@@ -247,12 +245,18 @@ function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
     .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
     .then(async function (photoResults) {
       if (photoResults.objects) {
+        console.log(
+          "IDX image count for mlsid: " +
+          property.MST_MLS_NUMBER +
+          "=" +
+          photoResults.objects.length
+        )
         for (var i = 0; i < photoResults.objects.length; i++) {
           if (photoResults.objects[i].error) {
             console.log("      Error2: " + photoResults.objects[i].error)
           } else {
             if (photoResults.objects[i].data) {
-              var imageNode = await createFileNodeFromBuffer({
+              const imageNode = await createFileNodeFromBuffer({
                 buffer: photoResults.objects[i].data,
                 getCache: getCache,
                 createNode: createNode,

@@ -33,29 +33,29 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
-//   const propertyTemplate = path.resolve("src/templates/property.js")
-//   pages.data.property.nodes.forEach(node => {
-//     createPage({
-//       path: `/property/${node.mlsid}`,
-//       component: propertyTemplate,
-//       context: {
-//         id: node.id,
-//       },
-//     })
-//   })
-//   const postsPerPage = 6
-//   const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-//   const insightsTemplate = path.resolve("src/templates/properties.js")
-//   Array.from({ length: numPages }).forEach((_, i) => {
-//     createPage({
-//       path: i === 0 ? `/property` : `/property/${i + 1}`,
-//       component: insightsTemplate,
-//       context: {
-//         limit: postsPerPage,
-//         skip: i * postsPerPage,
-//         numPages,
-//         currentPage: i + 1,
-//       },
-//     })
-//   })
-// }
+  //   const propertyTemplate = path.resolve("src/templates/property.js")
+  //   pages.data.property.nodes.forEach(node => {
+  //     createPage({
+  //       path: `/property/${node.mlsid}`,
+  //       component: propertyTemplate,
+  //       context: {
+  //         id: node.id,
+  //       },
+  //     })
+  //   })
+  //   const postsPerPage = 6
+  //   const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  //   const insightsTemplate = path.resolve("src/templates/properties.js")
+  //   Array.from({ length: numPages }).forEach((_, i) => {
+  //     createPage({
+  //       path: i === 0 ? `/property` : `/property/${i + 1}`,
+  //       component: insightsTemplate,
+  //       context: {
+  //         limit: postsPerPage,
+  //         skip: i * postsPerPage,
+  //         numPages,
+  //         currentPage: i + 1,
+  //       },
+  //     })
+  //   })
+}
