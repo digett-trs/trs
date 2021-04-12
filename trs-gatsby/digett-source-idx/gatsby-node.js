@@ -4,7 +4,6 @@ require("dotenv").config({
 })
 var rets = require("rets-client")
 var fs = require("fs")
-
 exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   const { createNode } = actions
   const kerrvilledata = await fetchPropertiesKerrville(
@@ -63,7 +62,7 @@ exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
   return
 }
 
-function fetchPropertiesSabor(createNode, createNodeId, getCache) {
+function fetchPropertiesSabor(createNode, createNodeId, getCache, properties) {
   console.log("fetch sab3")
   const clientSettings = {
     loginUrl: "http://sabor-rets.connectmls.com/rets/server/login",
@@ -90,8 +89,10 @@ function fetchPropertiesSabor(createNode, createNodeId, getCache) {
             searchData,
             createNode,
             createNodeId,
-            getCache
+            getCache,
+            properties
           )
+          console.log(props.length)
           resolve(props)
         })
     })
@@ -104,15 +105,18 @@ async function getPropsSabor(
   createNodeId,
   getCache
 ) {
-  const properties = []
+  var properties = []
+  var count = 0
   await Promise.all(
     searchData.results.map(async property => {
+      count++
       const myobjects = await getObjectsSabor(
         client,
         property,
         createNode,
         createNodeId,
-        getCache
+        getCache,
+        count
       )
       property.imageids = myobjects
       properties.push(property)
@@ -120,40 +124,52 @@ async function getPropsSabor(
   )
   return properties
 }
-function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
+function getObjectsSabor(
+  client,
+  property,
+  createNode,
+  createNodeId,
+  getCache,
+  count
+) {
   var imageIds = []
-  return client.objects
-    .getAllObjects("Property", "Photo", property.L_ListingID)
-    .then(async function (photoResults) {
-      if (photoResults.objects) {
-        console.log(
-          "Sabor image count for mlsid: " +
-            property.L_ListingID +
-            "=" +
-            photoResults.objects.length
-        )
-        for (var i = 0; i < photoResults.objects.length; i++) {
-          if (photoResults.objects[i].error) {
-            console.log("      Error2: " + photoResults.objects[i].error)
-          } else {
-            if (photoResults.objects[i].data) {
-              const imageNode = await createFileNodeFromBuffer({
-                buffer: photoResults.objects[i].data,
-                getCache: getCache,
-                createNode: createNode,
-                createNodeId: createNodeId,
-              })
-              imageIds.push(imageNode.id)
-            }
-            if (i === photoResults.objects.length - 1) {
-              return imageIds
+  return new Promise(resolve => {
+    client.objects
+      .getAllObjects("Property", "Photo", property.L_ListingID)
+      .then(async function (photoResults) {
+        if (photoResults.objects) {
+          console.log(
+            "Sabor count: " +
+              count +
+              " image count for mlsid: " +
+              property.L_ListingID +
+              "=" +
+              photoResults.objects.length
+          )
+          for (var i = 0; i < photoResults.objects.length; i++) {
+            if (photoResults.objects[i].error) {
+              console.log("      Error2: " + photoResults.objects[i].error)
+            } else {
+              if (photoResults.objects[i].data) {
+                const imageNode = await createFileNodeFromBuffer({
+                  buffer: photoResults.objects[i].data,
+                  getCache: getCache,
+                  createNode: createNode,
+                  createNodeId: createNodeId,
+                })
+                imageIds.push(imageNode.id)
+              }
+              if (i === photoResults.objects.length - 1) {
+                resolve(imageIds)
+              }
             }
           }
+        } else {
+          console.log("Sabor count: " + count + " no image")
+          resolve(imageIds)
         }
-      } else {
-        return null
-      }
-    })
+      })
+  })
 }
 
 function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
@@ -169,7 +185,15 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query("Property", "FARM", "(List_Price=750000+),(rets_status=Active)")
+        .query(
+          "Property",
+          "FARM",
+          "(List_Price=750000+),(rets_status=Active)",
+
+          {
+            limit: 5,
+          }
+        )
         .then(async function (searchData) {
           console.log(
             "Kerrville property count from query: " + searchData.results.length
@@ -223,7 +247,7 @@ async function getPropsNavi(
   createNodeId,
   getCache
 ) {
-  const properties = []
+  var properties = []
   await Promise.all(
     searchData.results.map(async property => {
       const myobjects = await getObjectsNavi(
@@ -241,7 +265,8 @@ async function getPropsNavi(
 }
 function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
   var imageIds = []
-  return client.objects
+  return new Promise(resolve => {
+  client.objects
     .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
     .then(async function (photoResults) {
       if (photoResults.objects) {
@@ -265,12 +290,12 @@ function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
               imageIds.push(imageNode.id)
             }
             if (i === photoResults.objects.length - 1) {
-              return imageIds
+              resolve(imageIds)
             }
           }
         }
       } else {
-        return null
+        resolve(imageIds)
       }
     })
 }

@@ -8,6 +8,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 const Property = ({ data }) => {
   const node = data.property
   const images = node.childrenFile
+  console.log(node)
   return (
     <Layout>
       <div>
