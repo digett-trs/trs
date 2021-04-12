@@ -22,9 +22,7 @@ export const postQuery = graphql`
     property: property(mlsid: { eq: $mlsid }) {
       mlsid
       childrenFile {
-        childImageSharp {
-          gatsbyImageData(width: 600)
-        }
+        absolutePath
       }
     }
   }
