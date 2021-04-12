@@ -121,7 +121,7 @@ async function getPropsSabor(
   return properties
 }
 function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
-  imageIds = []
+  var imageIds = []
   return client.objects
     .getAllObjects("Property", "Photo", property.L_ListingID)
     .then(async function (photoResults) {
@@ -240,7 +240,7 @@ async function getPropsNavi(
   return properties
 }
 function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
-  imageIds = []
+  var imageIds = []
   return client.objects
     .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
     .then(async function (photoResults) {

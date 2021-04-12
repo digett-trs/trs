@@ -7,6 +7,7 @@ import { jsx } from "theme-ui"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 const Property = ({ data }) => {
   const node = data.property
+  console.log(node)
   return (
     <Layout>
       <div>
