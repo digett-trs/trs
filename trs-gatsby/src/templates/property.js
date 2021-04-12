@@ -12,11 +12,6 @@ const Property = ({ data }) => {
     <Layout>
       <div>
         <h1>{node.mlsid}</h1>
-        {images.map((image, index) => (
-          <div>
-            <GatsbyImage image={image.childImageSharp.gatsbyImageData} />
-          </div>
-        ))}
       </div>
     </Layout>
   )
@@ -27,15 +22,6 @@ export const postQuery = graphql`
   query PropertyBySlug($mlsid: String!) {
     property: property(mlsid: { eq: $mlsid }) {
       mlsid
-      childrenFile {
-        childImageSharp {
-          gatsbyImageData(
-            width: 600
-            placeholder: BLURRED
-            formats: [AUTO, WEBP, AVIF]
-          )
-        }
-      }
     }
   }
 `
