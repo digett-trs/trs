@@ -28,15 +28,6 @@ export const postQuery = graphql`
   query PropertyBySlug($mlsid: String!) {
     property: property(mlsid: { eq: $mlsid }) {
       mlsid
-      childrenFile {
-        childImageSharp {
-          gatsbyImageData(
-            width: 600
-            placeholder: BLURRED
-            formats: [AUTO, WEBP, AVIF]
-          )
-        }
-      }
     }
   }
 `
