@@ -7,16 +7,10 @@ import { jsx } from "theme-ui"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 const Property = ({ data }) => {
   const node = data.property
-  const images = node.childrenFile
   return (
     <Layout>
       <div>
         <h1>{node.mlsid}</h1>
-        {images.map((image, index) => (
-          <div>
-            <GatsbyImage image={image.childImageSharp.gatsbyImageData} />
-          </div>
-        ))}
       </div>
     </Layout>
   )
