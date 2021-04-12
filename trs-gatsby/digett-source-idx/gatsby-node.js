@@ -173,15 +173,7 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query(
-          "Property",
-          "FARM",
-          "(List_Price=750000+),(rets_status=Active)",
-
-          {
-            limit: 5,
-          }
-        )
+        .query("Property", "FARM", "(List_Price=750000+),(rets_status=Active)")
         .then(async function (searchData) {
           console.log(
             "Kerrville property count from query: " + searchData.results.length
