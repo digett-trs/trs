@@ -1,4 +1,3 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -11,8 +10,14 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      property: allProperty {
+        nodes {
+          mlsid
+        }
+      }
     }
   `)
+  console.log(pages.data.page)
   const pageTemplate = path.resolve("src/templates/page.js")
   pages.data.page.nodes.forEach(node => {
     if (node.slug.current == "home") {
@@ -33,29 +38,29 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
-  //   const propertyTemplate = path.resolve("src/templates/property.js")
-  //   pages.data.property.nodes.forEach(node => {
-  //     createPage({
-  //       path: `/property/${node.mlsid}`,
-  //       component: propertyTemplate,
-  //       context: {
-  //         id: node.id,
-  //       },
-  //     })
-  //   })
-  //   const postsPerPage = 6
-  //   const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-  //   const insightsTemplate = path.resolve("src/templates/properties.js")
-  //   Array.from({ length: numPages }).forEach((_, i) => {
-  //     createPage({
-  //       path: i === 0 ? `/property` : `/property/${i + 1}`,
-  //       component: insightsTemplate,
-  //       context: {
-  //         limit: postsPerPage,
-  //         skip: i * postsPerPage,
-  //         numPages,
-  //         currentPage: i + 1,
-  //       },
-  //     })
-  //   })
+  const propertyTemplate = path.resolve("src/templates/property.js")
+  pages.data.property.nodes.forEach(node => {
+    createPage({
+      path: `/property/${node.mlsid}`,
+      component: propertyTemplate,
+      context: {
+        mlsid: node.mlsid,
+      },
+    })
+  })
+  const postsPerPage = 6
+  const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  const insightsTemplate = path.resolve("src/templates/properties.js")
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/property` : `/property/${i + 1}`,
+      component: insightsTemplate,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    })
+  })
 }

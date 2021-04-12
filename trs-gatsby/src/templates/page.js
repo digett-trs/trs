@@ -6,7 +6,8 @@ import Layout from "../components/layout"
 // import { jsx } from "theme-ui"
 const Page = ({ data }) => {
   const node = data.page
-
+  const images = node.image
+  console.log(node)
   return (
     <Layout>
       <div>
