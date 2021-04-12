@@ -106,17 +106,14 @@ async function getPropsSabor(
   getCache
 ) {
   var properties = []
-  var count = 0
   await Promise.all(
     searchData.results.map(async property => {
-      count++
       const myobjects = await getObjectsSabor(
         client,
         property,
         createNode,
         createNodeId,
-        getCache,
-        count
+        getCache
       )
       property.imageids = myobjects
       properties.push(property)
@@ -124,14 +121,7 @@ async function getPropsSabor(
   )
   return properties
 }
-function getObjectsSabor(
-  client,
-  property,
-  createNode,
-  createNodeId,
-  getCache,
-  count
-) {
+function getObjectsSabor(client, property, createNode, createNodeId, getCache) {
   var imageIds = []
   return new Promise(resolve => {
     client.objects
@@ -139,9 +129,7 @@ function getObjectsSabor(
       .then(async function (photoResults) {
         if (photoResults.objects) {
           console.log(
-            "Sabor count: " +
-              count +
-              " image count for mlsid: " +
+            "Sabor image count for mlsid: " +
               property.L_ListingID +
               "=" +
               photoResults.objects.length
@@ -165,7 +153,7 @@ function getObjectsSabor(
             }
           }
         } else {
-          console.log("Sabor count: " + count + " no image")
+          console.log("Sabor no image")
           resolve(imageIds)
         }
       })
@@ -266,36 +254,37 @@ async function getPropsNavi(
 function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
   var imageIds = []
   return new Promise(resolve => {
-  client.objects
-    .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
-    .then(async function (photoResults) {
-      if (photoResults.objects) {
-        console.log(
-          "IDX image count for mlsid: " +
-            property.MST_MLS_NUMBER +
-            "=" +
-            photoResults.objects.length
-        )
-        for (var i = 0; i < photoResults.objects.length; i++) {
-          if (photoResults.objects[i].error) {
-            console.log("      Error2: " + photoResults.objects[i].error)
-          } else {
-            if (photoResults.objects[i].data) {
-              const imageNode = await createFileNodeFromBuffer({
-                buffer: photoResults.objects[i].data,
-                getCache: getCache,
-                createNode: createNode,
-                createNodeId: createNodeId,
-              })
-              imageIds.push(imageNode.id)
-            }
-            if (i === photoResults.objects.length - 1) {
-              resolve(imageIds)
+    client.objects
+      .getAllObjects("Property", "Photo", property.MST_MLS_NUMBER)
+      .then(async function (photoResults) {
+        if (photoResults.objects) {
+          console.log(
+            "IDX image count for mlsid: " +
+              property.MST_MLS_NUMBER +
+              "=" +
+              photoResults.objects.length
+          )
+          for (var i = 0; i < photoResults.objects.length; i++) {
+            if (photoResults.objects[i].error) {
+              console.log("      Error2: " + photoResults.objects[i].error)
+            } else {
+              if (photoResults.objects[i].data) {
+                const imageNode = await createFileNodeFromBuffer({
+                  buffer: photoResults.objects[i].data,
+                  getCache: getCache,
+                  createNode: createNode,
+                  createNodeId: createNodeId,
+                })
+                imageIds.push(imageNode.id)
+              }
+              if (i === photoResults.objects.length - 1) {
+                resolve(imageIds)
+              }
             }
           }
+        } else {
+          resolve(imageIds)
         }
-      } else {
-        resolve(imageIds)
-      }
-    })
+      })
+  })
 }
