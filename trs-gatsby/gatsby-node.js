@@ -17,7 +17,6 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  console.log(pages.data.page)
   const pageTemplate = path.resolve("src/templates/page.js")
   pages.data.page.nodes.forEach(node => {
     if (node.slug.current == "home") {
