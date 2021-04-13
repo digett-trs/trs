@@ -5,6 +5,8 @@ import Serializers from "../components/serializers/serializers"
 import Layout from "../components/layout"
 import { jsx } from "theme-ui"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import Img from "gatsby-image"
+
 const Property = ({ data }) => {
   const node = data.property
   const images = node.childrenFile
@@ -15,7 +17,8 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         {images.map((image, index) => (
           <div>
-            <img src={image.childImageSharp.original.src} />
+            <Img className="left-icon" fixed={image.childImageSharp.fluid} />
+
             {/* <GatsbyImage image={image.childImageSharp.gatsbyImageData} /> */}
           </div>
         ))}
@@ -31,8 +34,8 @@ export const postQuery = graphql`
       mlsid
       childrenFile {
         childImageSharp {
-          original {
-            src
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
