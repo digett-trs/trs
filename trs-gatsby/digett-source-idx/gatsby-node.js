@@ -139,11 +139,11 @@ function getObjectsSabor(
         if (photoResults.objects) {
           console.log(
             "Sabor count: " +
-              count +
-              " image count for mlsid: " +
-              property.L_ListingID +
-              "=" +
-              photoResults.objects.length
+            count +
+            " image count for mlsid: " +
+            property.L_ListingID +
+            "=" +
+            photoResults.objects.length
           )
           for (var i = 0; i < photoResults.objects.length; i++) {
             if (photoResults.objects[i].error) {
@@ -183,7 +183,8 @@ function fetchPropertiesKerrville(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query("Property", "FARM", "(List_Price=750000+),(rets_status=Active)")
+        .query("Property", "FARM", "(List_Price=750000+),(rets_status=Active)"
+        )
         .then(async function (searchData) {
           console.log(
             "Kerrville property count from query: " + searchData.results.length
@@ -213,7 +214,8 @@ function fetchPropertiesIdx(createNode, createNodeId, getCache) {
   return new Promise(resolve => {
     rets.getAutoLogoutClient(clientSettings, function (client) {
       return client.search
-        .query("Property", "LAND", "(List_Price=750000+),(rets_status=Active)")
+        .query("Property", "LAND", "(List_Price=750000+),(rets_status=Active)"
+        )
         .then(async function (searchData) {
           console.log(
             "IDX property count from query: " + searchData.results.length
@@ -261,9 +263,9 @@ function getObjectsNavi(client, property, createNode, createNodeId, getCache) {
       if (photoResults.objects) {
         console.log(
           "IDX image count for mlsid: " +
-            property.MST_MLS_NUMBER +
-            "=" +
-            photoResults.objects.length
+          property.MST_MLS_NUMBER +
+          "=" +
+          photoResults.objects.length
         )
         for (var i = 0; i < photoResults.objects.length; i++) {
           if (photoResults.objects[i].error) {

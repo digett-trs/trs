@@ -15,7 +15,8 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         {images.map((image, index) => (
           <div>
-            <GatsbyImage image={image.childImageSharp.gatsbyImageData} />
+            <img src={image.childImageSharp.original.src} />
+            {/* <GatsbyImage image={image.childImageSharp.gatsbyImageData} /> */}
           </div>
         ))}
       </div>
@@ -28,6 +29,13 @@ export const postQuery = graphql`
   query PropertyBySlug($mlsid: String!) {
     property: property(mlsid: { eq: $mlsid }) {
       mlsid
+      childrenFile {
+        childImageSharp {
+          original {
+            src
+          }
+        }
+      }
     }
   }
 `
