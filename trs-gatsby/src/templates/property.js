@@ -10,7 +10,6 @@ import Img from "gatsby-image"
 const Property = ({ data }) => {
   const node = data.property
   const images = node.childrenFile
-  console.log(node)
   return (
     <Layout>
       <div>
@@ -35,7 +34,7 @@ export const postQuery = graphql`
       childrenFile {
         childImageSharp {
           fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid_tracedSVG
+            ...GatsbyImageSharpFluid
           }
         }
       }
