@@ -17,7 +17,7 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         {images.map((image, index) => (
           <div>
-            <Img className="left-icon" fixed={image.childImageSharp.fluid} />
+            <Img fluid={image.childImageSharp.fluid} />
 
             {/* <GatsbyImage image={image.childImageSharp.gatsbyImageData} /> */}
           </div>
@@ -35,7 +35,7 @@ export const postQuery = graphql`
       childrenFile {
         childImageSharp {
           fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid
+            ...GatsbyImageSharpFluid_tracedSVG
           }
         }
       }
