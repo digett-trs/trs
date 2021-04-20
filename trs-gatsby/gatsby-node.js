@@ -79,7 +79,7 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
           getCache
         )
         console.log(imageIds)
-        node.localFile___NODE = imageIds[1]
+        node.localFile___NODE = imageIds
         console.log(node.mlsid)
       } catch (error) {
         console.log(error)
