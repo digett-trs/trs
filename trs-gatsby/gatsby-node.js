@@ -48,21 +48,21 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-  // const postsPerPage = 6
-  // const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-  // const insightsTemplate = path.resolve("src/templates/properties.js")
-  // Array.from({ length: numPages }).forEach((_, i) => {
-  //   createPage({
-  //     path: i === 0 ? `/property` : `/property/${i + 1}`,
-  //     component: insightsTemplate,
-  //     context: {
-  //       limit: postsPerPage,
-  //       skip: i * postsPerPage,
-  //       numPages,
-  //       currentPage: i + 1,
-  //     },
-  //   })
-  // })
+  const postsPerPage = 6
+  const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  const insightsTemplate = path.resolve("src/templates/properties.js")
+  Array.from({ length: numPages }).forEach((_, i) => {
+    createPage({
+      path: i === 0 ? `/property` : `/property/${i + 1}`,
+      component: insightsTemplate,
+      context: {
+        limit: postsPerPage,
+        skip: i * postsPerPage,
+        numPages,
+        currentPage: i + 1,
+      },
+    })
+  })
 }
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
