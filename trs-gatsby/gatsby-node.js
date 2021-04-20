@@ -65,11 +65,18 @@ exports.createPages = async ({ graphql, actions }) => {
   // })
 }
 
+exports.sourceNodes = ({ actions, getNodesByType }) => {
+  const { touchNode } = actions
+  // touch nodes to ensure they aren't garbage collected
+  ;[...getNodesByType(`internal__posts`)].forEach(node =>
+    touchNode({ nodeId: node.id })
+  )
+}
+
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
-  const { createNode, createNodeField, touchNode } = actions
+  const { createNode, createNodeField } = actions
 
   if (node.internal.type === `internal__posts`) {
-    touchNode({ nodeId: node.id })
     if (node.field_images) {
       try {
         const imageIds = await createImages(
