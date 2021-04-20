@@ -16,7 +16,7 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         {images.map((image, index) => (
           <div>
-            <Img fluid={image.childImageSharp.fluid} />
+            <img src={image.childImageSharp.original.src} />
           </div>
         ))}
       </div>
@@ -31,8 +31,8 @@ export const postQuery = graphql`
       mlsid
       childrenFile {
         childImageSharp {
-          fluid(maxWidth: 600) {
-            ...GatsbyImageSharpFluid
+          original {
+            src
           }
         }
       }
