@@ -8,17 +8,12 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Img from "gatsby-image"
 const Property = ({ data }) => {
   const node = data.property
-  const images = node.childrenFile
-  console.log(images)
+
   return (
     <Layout>
       <div>
         <h1>{node.mlsid}</h1>
-        {images.map((image, index) => (
-          <div>
-            <img src={image.childImageSharp.original.src} />
-          </div>
-        ))}
+
       </div>
     </Layout>
   )
@@ -31,8 +26,8 @@ export const postQuery = graphql`
       mlsid
       childrenFile {
         childImageSharp {
-          original {
-            src
+          fluid(maxWidth: 600) {
+            ...GatsbyImageSharpFluid
           }
         }
       }

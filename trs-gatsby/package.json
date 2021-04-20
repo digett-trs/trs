@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@netlify/functions": "^0.7.0",
     "@sanity/block-content-to-react": "^2.0.7",
     "dotenv": "^8.2.0",
     "gatsby": "^3.1.1",
