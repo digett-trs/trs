@@ -1,3 +1,4 @@
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -10,7 +11,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      property: allProperty {
+      property: allInternalPosts {
         nodes {
           mlsid
         }
@@ -47,19 +48,66 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-  const postsPerPage = 6
-  const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-  const insightsTemplate = path.resolve("src/templates/properties.js")
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: i === 0 ? `/property` : `/property/${i + 1}`,
-      component: insightsTemplate,
-      context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1,
-      },
+  // const postsPerPage = 6
+  // const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  // const insightsTemplate = path.resolve("src/templates/properties.js")
+  // Array.from({ length: numPages }).forEach((_, i) => {
+  //   createPage({
+  //     path: i === 0 ? `/property` : `/property/${i + 1}`,
+  //     component: insightsTemplate,
+  //     context: {
+  //       limit: postsPerPage,
+  //       skip: i * postsPerPage,
+  //       numPages,
+  //       currentPage: i + 1,
+  //     },
+  //   })
+  // })
+}
+
+exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
+  const { createNode, createNodeField } = actions
+
+  if (node.internal.type === `internal__posts`) {
+    if (node.field_images) {
+      try {
+        const imageIds = await createImages(
+          createNode,
+          node,
+          actions,
+          createNodeId,
+          getCache
+        )
+        console.log(imageIds)
+        node.localFile___NODE = imageIds[1]
+        console.log(node.mlsid)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+}
+
+async function createImages(createNode, node, actions, createNodeId, getCache) {
+  var imageIds = []
+  await Promise.all(
+    node.field_images.map(async image => {
+      let fileNode
+      try {
+        fileNode = await createRemoteFileNode({
+          url: image,
+          parentNodeId: node.id,
+          getCache,
+          createNode,
+          createNodeId,
+        })
+        if (fileNode) {
+          imageIds.push(fileNode.id)
+        }
+      } catch (e) {
+        // Ignore
+      }
     })
-  })
+  )
+  return imageIds
 }

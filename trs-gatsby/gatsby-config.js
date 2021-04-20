@@ -1,7 +1,14 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
-
+const postType = {
+  id: 1,
+  mlsid: "666",
+  field_images: [
+    "https://mls-api-trfs.pantheonsite.io/sites/default/files/99722-1599649396-44.jpg",
+    "https://mls-api-trfs.pantheonsite.io/sites/default/files/78490-1597381396-17.jpg",
+  ],
+}
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -50,7 +57,33 @@ module.exports = {
       },
     },
     "gatsby-plugin-theme-ui",
-    require.resolve(`./digett-source-idx`),
+    // {
+    //   resolve: `gatsby-plugin-remote-images`,
+    //   options: {
+    //     nodeType: "internal__posts",
+    //     name: "localImages",
+    //     imagePath: "field_images",
+    //     type: "array",
+    //     // ** ALL OPTIONAL BELOW HERE: **
+    //   },
+    // },
+    // require.resolve(`./digett-source-idx`),
+    {
+      resolve: "gatsby-source-apiserver",
+      options: {
+        url: "https://mls-api-trfs.pantheonsite.io/rest/mls",
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        typePrefix: "internal__",
+        name: `posts`,
+        verboseOutput: true,
+        // Define schemaType to normalize blank values
+        // example:
+        schemaType: postType,
+      },
+    },
     // require.resolve(`./digett-source-kerrville`),
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
