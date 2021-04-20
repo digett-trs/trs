@@ -90,12 +90,12 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
 
 async function createImages(createNode, node, actions, createNodeId, getCache) {
   var imageIds = []
-  return new Promise(async resolve => {
-    for (var i = 0; i < node.field_images.length; i++) {
+  await Promise.all(
+    node.field_images.map(async image => {
       let fileNode
       try {
         fileNode = await createRemoteFileNode({
-          url: node.field_images[i],
+          url: image,
           parentNodeId: node.id,
           getCache,
           createNode,
@@ -104,13 +104,10 @@ async function createImages(createNode, node, actions, createNodeId, getCache) {
         if (fileNode) {
           imageIds.push(fileNode.id)
         }
-        console.log(i + " " + node.field_images.length)
-        if (i === node.field_images.length - 1) {
-          resolve(imageIds)
-        }
       } catch (e) {
         // Ignore
       }
-    }
-  })
+    })
+  )
+  return imageIds
 }
