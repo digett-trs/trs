@@ -66,9 +66,10 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
-  const { createNode, createNodeField } = actions
+  const { createNode, createNodeField, touchNode } = actions
 
   if (node.internal.type === `internal__posts`) {
+    touchNode({ nodeId: node.id })
     if (node.field_images) {
       try {
         const imageIds = await createImages(
