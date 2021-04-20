@@ -8,7 +8,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Img from "gatsby-image"
 const Property = ({ data }) => {
   const node = data.property
-  const images = node.localFile
+  const images = node.childrenFile
   console.log(images)
   return (
     <Layout>
@@ -16,7 +16,7 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         {images.map((image, index) => (
           <div>
-            <Img fluid={image.childrenImageSharp[0].fluid} />
+            <Img fluid={image.childImageSharp.fluid} />
           </div>
         ))}
       </div>
@@ -29,8 +29,8 @@ export const postQuery = graphql`
   query PropertyBySlug($mlsid: String!) {
     property: internalPosts(mlsid: { eq: $mlsid }) {
       mlsid
-      localFile {
-        childrenImageSharp {
+      childrenFile {
+        childImageSharp {
           fluid(maxWidth: 600) {
             ...GatsbyImageSharpFluid
           }

@@ -79,7 +79,7 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
           getCache
         )
         console.log(imageIds)
-        node.localFile___NODE = imageIds
+        node.children = imageIds
         console.log(node.mlsid)
       } catch (error) {
         console.log(error)
@@ -90,12 +90,12 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
 
 async function createImages(createNode, node, actions, createNodeId, getCache) {
   var imageIds = []
-  await Promise.all(
-    node.field_images.map(async image => {
+  return new Promise(async resolve => {
+    for (var i = 0; i < node.field_images.length; i++) {
       let fileNode
       try {
         fileNode = await createRemoteFileNode({
-          url: image,
+          url: node.field_images[i],
           parentNodeId: node.id,
           getCache,
           createNode,
@@ -104,10 +104,13 @@ async function createImages(createNode, node, actions, createNodeId, getCache) {
         if (fileNode) {
           imageIds.push(fileNode.id)
         }
+        console.log(i + " " + node.field_images.length)
+        if (i === node.field_images.length - 1) {
+          resolve(imageIds)
+        }
       } catch (e) {
         // Ignore
       }
-    })
-  )
-  return imageIds
+    }
+  })
 }
