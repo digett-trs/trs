@@ -78,6 +78,7 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
           createNodeId,
           getCache
         )
+
         console.log(imageIds)
         node.children = imageIds
         console.log(node.mlsid)
