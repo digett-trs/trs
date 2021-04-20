@@ -8,12 +8,17 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Img from "gatsby-image"
 const Property = ({ data }) => {
   const node = data.property
-
+  const images = node.childrenFile
+  console.log(images)
   return (
     <Layout>
       <div>
         <h1>{node.mlsid}</h1>
-
+        {images.map((image, index) => (
+          <div>
+            <Img fluid={image.childImageSharp.fluid} />
+          </div>
+        ))}
       </div>
     </Layout>
   )
