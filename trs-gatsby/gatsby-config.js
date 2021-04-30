@@ -82,7 +82,7 @@ module.exports = {
           "Content-Type": "application/json",
         },
         name: `property`,
-        verboseOutput: true,
+        verboseOutput: false,
         // Define schemaType to normalize blank values
         // example:
         schemaType: postType,
