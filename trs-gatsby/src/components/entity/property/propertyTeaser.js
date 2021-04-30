@@ -18,12 +18,14 @@ const PropertyTeaser = ({ property }) => {
           width: ["100%", "45%", "40%"]
         }}
       >
-        <Img
-          sx={{
-            maxWidth: "100%",
-            height: 'auto',
-          }}
-          fluid={property.childrenFile[0].childImageSharp.fluid} />
+        {property.childrenFile[0] &&
+          <Img
+            sx={{
+              maxWidth: "100%",
+              height: 'auto',
+            }}
+            fluid={property.childrenFile[0].childImageSharp.fluid} />
+        }
         <Link to={'/property/' + property.mlsid}>View Ranch Details</Link>
       </div>
       <div
