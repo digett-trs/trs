@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
+import PropertyTeaser from "../components/entity/property/propertyTeaser"
 import { jsx } from "theme-ui"
 
 const Properties = props => {
@@ -13,13 +14,10 @@ const Properties = props => {
   return (
     <Layout>
       <h1>All Properties</h1>
-      <ul>
-        {properties.nodes.map((property, index) => (
-          <li>
-            <Link to={"/property/" + property.mlsid}>{property.mlsid}</Link>
-          </li>
-        ))}
-      </ul>
+      {properties.nodes.map((property, index) => (
+        <PropertyTeaser property={property} key={index}></PropertyTeaser>
+
+      ))}
       <div className="pager-previous-container">
         {!isFirst && (
           <Link to={"/property" + prevPage} rel="prev">
@@ -54,10 +52,9 @@ export default Properties
 
 export const propertiesQuery = graphql`
   query propertiesListQuery($skip: Int!, $limit: Int!) {
-    properties: allInternalPosts(limit: $limit, skip: $skip) {
-      nodes {
-        id
-        mlsid
+    properties: allProperty(limit: $limit, skip: $skip) {
+      nodes{
+        ...propertyTeaserFragment
       }
     }
   }

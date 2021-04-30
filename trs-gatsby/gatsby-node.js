@@ -11,7 +11,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-      property: allInternalPosts {
+      property: allProperty {
         nodes {
           mlsid
         }
@@ -67,16 +67,16 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
-  // touch nodes to ensure they aren't garbage collected
-  ;[...getNodesByType(`internal__posts`)].forEach(node =>
-    touchNode({ nodeId: node.id })
-  )
+    // touch nodes to ensure they aren't garbage collected
+    ;[...getNodesByType(`property`)].forEach(node =>
+      touchNode({ nodeId: node.id })
+    )
 }
 
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
   const { createNode, createNodeField } = actions
 
-  if (node.internal.type === `internal__posts`) {
+  if (node.internal.type === `property`) {
     if (node.field_images) {
       try {
         const imageIds = await createImages(

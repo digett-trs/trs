@@ -4,6 +4,11 @@ require("dotenv").config({
 const postType = {
   id: 1,
   mlsid: "666",
+  field_acreage: "666",
+  field_county: "The County",
+  field_l_remarks: "Lorem Ipsum Remarks",
+  field_price: "666",
+  field_l_addressstreet: "666 Street",
   field_images: [
     "https://mls-api-trfs.pantheonsite.io/sites/default/files/99722-1599649396-44.jpg",
     "https://mls-api-trfs.pantheonsite.io/sites/default/files/78490-1597381396-17.jpg",
@@ -76,8 +81,7 @@ module.exports = {
         headers: {
           "Content-Type": "application/json",
         },
-        typePrefix: "internal__",
-        name: `posts`,
+        name: `property`,
         verboseOutput: true,
         // Define schemaType to normalize blank values
         // example:

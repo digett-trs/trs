@@ -6,7 +6,6 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import "./layout.css"
 import { useColorMode } from "theme-ui"
-
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -26,9 +25,10 @@ const Layout = ({ children }) => {
       <div
         sx={{
           // this uses the value from `theme.space[4]`
-          padding: 3,
-          maxWidth: 600,
+          maxWidth: ['400px', '800px', '1000px'],
+          padding: "0px 10%",
           margin: "0 auto",
+          boxSizing: "content-box"
           // these use values from `theme.colors`
         }}
       >
