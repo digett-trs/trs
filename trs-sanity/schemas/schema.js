@@ -7,6 +7,9 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 // We import object and document schemas
 import siteSettings from "./siteSettings";
 import page from "./page";
+import menuItemItem from "./menuItemItem"
+import menuItem from "./menuItem"
+import menu from "./menu";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -18,5 +21,8 @@ export default createSchema({
     /* Your types here! */
     siteSettings,
     page,
+    menuItemItem,
+    menuItem,
+    menu,
   ]),
 });
