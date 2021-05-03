@@ -1,30 +1,20 @@
 export default {
-  title: "Menu Item Item",
-  name: "menuItemItem",
+  title: "Menu Item Sub",
+  name: "menuItemSub",
   type: "object",
   fields: [
+    { name: "title", type: "string", title: "Menu Title" },
     {
       name: "document",
       type: "reference",
       title: "Document Reference",
       to: [{ type: "page" }],
     },
-    { name: "title", type: "string", title: "Menu Title" },
-    {
-      title: "Submenu Items",
-      name: "submenu",
-      type: "array",
-      of: [
-        {
-          type: "menuItemSub",
-        },
-      ],
-    },
   ],
   preview: {
     select: {
-      title: "children.title",
-      pageSlug: "children.document.slug.current",
+      title: "title",
+      pageSlug: "document.slug.current",
     },
     prepare(selection) {
       const { pageSlug, title } = selection;

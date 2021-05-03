@@ -1,29 +1,26 @@
 export default {
-  title: 'Menu Item',
-  name: 'menuItem',
-  type: 'object',
+  title: "Menu Item",
+  name: "menuItem",
+  type: "object",
   fields: [
     {
-      title: 'Menu Item',
-      name: 'children',
-      type: 'array',
-      of: [{ type: 'menuItemItem' }],
-      validation: Rule => Rule.required(),
+      title: "Menu Item Item",
+      name: "children",
+      type: "menuItemItem",
     },
   ],
   preview: {
     select: {
-      title: 'page.title',
-      pageSlug: 'page.slug',
-      pageTitle: 'page.title',
-      media: '',
+      title: "children.title",
+      pageSlug: "children.document.slug.current",
     },
     prepare(selection) {
-      const { pageSlug, pageTitle } = selection;
+      const { pageSlug, title } = selection;
+      console.log(selection);
       return {
         ...selection,
-        title: pageTitle,
-        subtitle: `Content Item | ${pageSlug.current}`,
+        title: title,
+        subtitle: `URL: https://www.texasranchesforsale.com/` + pageSlug,
       };
     },
   },
