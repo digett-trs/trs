@@ -22,12 +22,10 @@ const Layout = ({ children }) => {
       <Header></Header>
       <div
         sx={{
-          // this uses the value from `theme.space[4]`
           maxWidth: ["400px", "800px", "1000px"],
           padding: "0px 10%",
           margin: "0 auto",
           boxSizing: "content-box",
-          // these use values from `theme.colors`
         }}
       >
         <main>{children}</main>

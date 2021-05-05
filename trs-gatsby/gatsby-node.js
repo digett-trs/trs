@@ -4,6 +4,14 @@ exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const pages = await graphql(`
     {
+      ourproperty: allSanityProperty {
+        nodes {
+          id
+          slug {
+            current
+          }
+        }
+      }
       page: allSanityPage {
         nodes {
           slug {
@@ -38,6 +46,16 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
+  const ourPropertyTemplate = path.resolve("src/templates/ourProperty.js")
+  pages.data.ourproperty.nodes.forEach(node => {
+    createPage({
+      path: `/our-property/${node.slug.current}`,
+      component: ourPropertyTemplate,
+      context: {
+        id: node.id,
+      },
+    })
+  })
   const propertyTemplate = path.resolve("src/templates/property.js")
   pages.data.property.nodes.forEach(node => {
     createPage({
@@ -67,10 +85,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
-    // touch nodes to ensure they aren't garbage collected
-    ;[...getNodesByType(`property`)].forEach(node =>
-      touchNode({ nodeId: node.id })
-    )
+  // touch nodes to ensure they aren't garbage collected
+  ;[...getNodesByType(`property`)].forEach(node =>
+    touchNode({ nodeId: node.id })
+  )
 }
 
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {

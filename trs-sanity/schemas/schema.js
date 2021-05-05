@@ -11,6 +11,11 @@ import menuItemSub from "./menuItemSub";
 import menuItemItem from "./menuItemItem";
 import menuItem from "./menuItem";
 import menu from "./menu";
+import county from "./county";
+import region from "./region";
+import propertyType from "./propertyType";
+import property from "./property";
+import team from "./team";
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -26,5 +31,10 @@ export default createSchema({
     menuItemItem,
     menuItem,
     menu,
+    county,
+    region,
+    propertyType,
+    property,
+    team,
   ]),
 });

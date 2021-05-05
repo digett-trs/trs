@@ -16,5 +16,13 @@ export default {
       title: "Description",
       description: "Describe your blog for search engines and social media.",
     },
+    {
+      title: "Logo",
+      name: "logo",
+      type: "image",
+      options: {
+        hotspot: true, // <-- Defaults to false
+      },
+    },
   ],
 };
