@@ -23,8 +23,8 @@ import {
 } from "react-instantsearch-dom"
 
 const searchClient = algoliasearch(
-  "DPA87O6Q7G",
-  "5abc83d30c90d471fc9a4153c55870a4"
+  process.env.ALGOLIA_APP_ID,
+  process.env.ALGOLIA_SEARCH_ONLY_API_KEY
 )
 
 const AdditionalProperties = props => (
