@@ -21,10 +21,9 @@ import {
   connectRefinementList,
   connectRange,
 } from "react-instantsearch-dom"
-
 const searchClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_SEARCH_ONLY_API_KEY
+  "DPA87O6Q7G",
+  "5abc83d30c90d471fc9a4153c55870a4"
 )
 
 const AdditionalProperties = props => (
