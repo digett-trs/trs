@@ -81,6 +81,26 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
+  const additionalPropertiesTemplate = path.resolve(
+    "src/templates/additionalProperties.js"
+  )
+  createPage({
+    path: `/additionalproperties2`,
+    component: additionalPropertiesTemplate,
+  })
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type Property implements Node {
+      frontmatter: Frontmatter
+    }
+    type Frontmatter {
+      tags: [String!]!
+    }
+  `
+  createTypes(typeDefs)
 }
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
@@ -95,6 +115,9 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
   const { createNode, createNodeField } = actions
 
   if (node.internal.type === `property`) {
+    if (node.field_price) {
+      node.field_price = parseInt(node.field_price)
+    }
     if (node.field_images) {
       try {
         const imageIds = await createImages(

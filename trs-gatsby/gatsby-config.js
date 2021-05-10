@@ -1,6 +1,7 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
+const queries = require(`${__dirname}/src/algolia/algolia`)
 const postType = {
   id: 1,
   mlsid: "666",
@@ -59,6 +60,15 @@ module.exports = {
         graphqlTag: "default",
         overlayDrafts: true,
         watchMode: true,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_API_KEY,
+        queries,
+        chunkSize: 10000, // default: 1000
       },
     },
     "gatsby-plugin-theme-ui",
