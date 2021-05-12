@@ -9,6 +9,9 @@ import withURLSync from "./URLSync"
 import PropTypes from "prop-types"
 import Rheostat from "rheostat"
 import algoliasearch from "algoliasearch/lite"
+import Select from "react-select"
+import makeAnimated from "react-select/animated"
+import AsyncSelect from "react-select/async"
 import {
   InstantSearch,
   ClearRefinements,
@@ -21,9 +24,10 @@ import {
   connectRefinementList,
   connectRange,
 } from "react-instantsearch-dom"
+
 const searchClient = algoliasearch(
-  "DPA87O6Q7G",
-  "5abc83d30c90d471fc9a4153c55870a4"
+  process.env.ALGOLIA_APP_ID,
+  process.env.ALGOLIA_ADMIN_API_KEY
 )
 
 const AdditionalProperties = props => (
@@ -50,6 +54,7 @@ const AdditionalProperties = props => (
           <SearchBox />
           <div>Price Range</div>
           <ConnectedRange attribute="field_price" />
+          <CustomRefinementList attribute="field_county" isMulti={true} />
         </div>
         <div
           sx={{
@@ -72,13 +77,52 @@ const MyHits = connectHits(({ hits }) => {
 })
 
 function HitComponent({ hit }) {
-  console.log(hit)
+  // console.log(hit)
   return (
     <PropertyTeaser property={hit} className="hit">
       {hit.field_price}
     </PropertyTeaser>
   )
 }
+class RefinementList extends Component {
+  constructor(props) {
+    super(props)
+    // this.state = { value: '' };
+    this.state = {
+      value: "",
+      selectedOption: null,
+    }
+    this.handleSelectChange = this.handleSelectChange.bind(this)
+  }
+  handleSelectChange(item) {
+    console.log(item)
+    this.setState(
+      {
+        value: item,
+      },
+      this.props.refine(item.length > 0 ? item[item.length - 1].value : "")
+    )
+  }
+
+  render() {
+    const { selectedOption } = this.state
+    return (
+      // <Select
+      //   options={this.props.items}
+      //   value={selectedOption}
+      //   isMulti={true}
+      //   onChange={this.setSelectedOption}
+      // />
+      <Select
+        isMulti={true}
+        value={this.state.value}
+        options={this.props.items}
+        onChange={this.handleSelectChange}
+      />
+    )
+  }
+}
+const CustomRefinementList = connectRefinementList(RefinementList)
 
 class Range extends Component {
   static propTypes = {

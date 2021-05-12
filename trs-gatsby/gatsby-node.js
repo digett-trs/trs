@@ -90,19 +90,6 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-    type Property implements Node {
-      frontmatter: Frontmatter
-    }
-    type Frontmatter {
-      tags: [String!]!
-    }
-  `
-  createTypes(typeDefs)
-}
-
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
   // touch nodes to ensure they aren't garbage collected
@@ -118,6 +105,9 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
     if (node.field_price) {
       node.field_price = parseInt(node.field_price)
     }
+    if (node.field_acreage) {
+      node.field_acreage = parseInt(node.field_acreage)
+    }
     if (node.field_images) {
       try {
         const imageIds = await createImages(
@@ -127,7 +117,6 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
           createNodeId,
           getCache
         )
-
         console.log(imageIds)
         node.children = imageIds
         console.log(node.mlsid)

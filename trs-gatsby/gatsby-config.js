@@ -34,6 +34,12 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        allowList: ["ALGOLIA_ADMIN_API_KEY", "ALGOLIA_APP_ID"],
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `gatsby-starter-default`,
