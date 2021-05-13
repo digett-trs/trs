@@ -57,6 +57,7 @@ const AdditionalProperties = props => (
           <h3>County</h3>
           <CustomRefinementList attribute="field_county" />
         </div>
+
         <div
           sx={{
             width: "calc(100% - 240px)",
