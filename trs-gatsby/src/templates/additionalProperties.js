@@ -10,8 +10,7 @@ import PropTypes from "prop-types"
 import Rheostat from "rheostat"
 import algoliasearch from "algoliasearch/lite"
 import Select from "react-select"
-import makeAnimated from "react-select/animated"
-import AsyncSelect from "react-select/async"
+import MultiSelect from "@khanacademy/react-multi-select"
 import {
   InstantSearch,
   ClearRefinements,
@@ -23,6 +22,7 @@ import {
   connectNumericMenu,
   connectRefinementList,
   connectRange,
+  MenuSelect,
 } from "react-instantsearch-dom"
 
 const searchClient = algoliasearch(
@@ -52,9 +52,10 @@ const AdditionalProperties = props => (
         >
           <h3>Property Search</h3>
           <SearchBox />
-          <div>Price Range</div>
+          <h3>Price Range</h3>
           <ConnectedRange attribute="field_price" />
-          <CustomRefinementList attribute="field_county" isMulti={true} />
+          <h3>County</h3>
+          <CustomRefinementList attribute="field_county" />
         </div>
         <div
           sx={{
@@ -83,6 +84,47 @@ function HitComponent({ hit }) {
       {hit.field_price}
     </PropertyTeaser>
   )
+}
+
+class Consumer extends React.Component {
+  constructor(props) {
+    super(props)
+    // this.state = { value: '' };
+    this.state = {
+      selected: [],
+    }
+    this.changed = this.changed.bind(this)
+  }
+
+  changed(data) {
+    console.log(data)
+    this.setState({ selected: data }, () => {
+      this.props.refine(this.state.selected)
+      console.log(this.state.selected)
+    })
+  }
+  render() {
+    const { selected } = this.state
+    const options = []
+    this.props.items.map(item => {
+      // console.log(item)
+      options.push({ label: item.label, value: item.label })
+    })
+
+    return (
+      <MultiSelect
+        options={options}
+        selected={selected}
+        onSelectedChanged={this.changed}
+        overrideStrings={{
+          selectSomeItems: "Select Some Counties",
+          allItemsAreSelected: "All Counties are Selected",
+          selectAll: "Select All",
+          search: "Search",
+        }}
+      />
+    )
+  }
 }
 class RefinementList extends Component {
   constructor(props) {
@@ -122,7 +164,7 @@ class RefinementList extends Component {
     )
   }
 }
-const CustomRefinementList = connectRefinementList(RefinementList)
+const CustomRefinementList = connectRefinementList(Consumer)
 
 class Range extends Component {
   static propTypes = {
