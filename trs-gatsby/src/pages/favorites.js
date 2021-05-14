@@ -12,12 +12,13 @@ class Favorites extends React.Component {
     }
   }
   componentWillMount() {
-    var favorites = JSON.parse(localStorage.getItem('Favorites'));
-    console.log(favorites)
-    this.setState({ favorites: favorites }, () => {
-      console.log(this.state.favorites)
-    })
-
+    if (typeof window !== 'undefined' && window) {
+      var favorites = JSON.parse(localStorage.getItem('Favorites'));
+      console.log(favorites)
+      this.setState({ favorites: favorites }, () => {
+        console.log(this.state.favorites)
+      })
+    }
   }
   render() {
     return (

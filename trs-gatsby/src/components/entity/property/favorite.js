@@ -12,48 +12,54 @@ class Favorite extends React.Component {
     this.setFavorite = this.setFavorite.bind(this)
   }
   componentWillMount() {
-    var favorites = JSON.parse(localStorage.getItem('Favorites'));
-    console.log(favorites)
-    if (favorites !== null) {
-      if (favorites.some(favorites => favorites.mlsid === this.props.property.mlsid)) {
-        this.setState({ fav: true }, () => {
-        })
+    if (typeof window !== 'undefined' && window) {
+      var favorites = JSON.parse(localStorage.getItem('Favorites'));
+      console.log(favorites)
+      if (favorites !== null) {
+        if (favorites.some(favorites => favorites.mlsid === this.props.property.mlsid)) {
+          this.setState({ fav: true }, () => {
+          })
+        }
       }
+
     }
+
 
 
   }
 
   setFavorite(property) {
-    var favorites = JSON.parse(localStorage.getItem('Favorites'));
-    if (favorites === null) {
-      var detail = [property];
-      localStorage.setItem('Favorites', JSON.stringify(detail));
-      this.setState({ fav: true })
-    }
-    else {
-      // console.log(favorites)
-      // if (!favorites.some(function (obj) {
-      //   return obj.mlsid === mls;
-      // })) {
-      //   favorites.push({ "mlsid": mls });
-      // };
-
-      // localStorage.setItem('Favorites', JSON.stringify(favorites));
-      if (favorites.some(favorites => favorites.mlsid === this.props.property.mlsid)) {
-        this.setState({ fav: false }, () => {
-          const newList = favorites.filter((item) => item.mlsid !== property.mlsid);
-          localStorage.setItem('Favorites', JSON.stringify(newList));
-          console.log(newList)
-        })
+    if (typeof window !== 'undefined' && window) {
+      var favorites = JSON.parse(localStorage.getItem('Favorites'));
+      if (favorites === null) {
+        var detail = [property];
+        localStorage.setItem('Favorites', JSON.stringify(detail));
+        this.setState({ fav: true })
       }
       else {
-        this.setState({ fav: true }, () => {
-          favorites.push(property);
-          localStorage.setItem('Favorites', JSON.stringify(favorites));
-        })
-      }
+        // console.log(favorites)
+        // if (!favorites.some(function (obj) {
+        //   return obj.mlsid === mls;
+        // })) {
+        //   favorites.push({ "mlsid": mls });
+        // };
 
+        // localStorage.setItem('Favorites', JSON.stringify(favorites));
+        if (favorites.some(favorites => favorites.mlsid === this.props.property.mlsid)) {
+          this.setState({ fav: false }, () => {
+            const newList = favorites.filter((item) => item.mlsid !== property.mlsid);
+            localStorage.setItem('Favorites', JSON.stringify(newList));
+            console.log(newList)
+          })
+        }
+        else {
+          this.setState({ fav: true }, () => {
+            favorites.push(property);
+            localStorage.setItem('Favorites', JSON.stringify(favorites));
+          })
+        }
+
+      }
     }
   }
   render() {
