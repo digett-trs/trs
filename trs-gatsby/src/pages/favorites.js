@@ -8,7 +8,7 @@ class Favorites extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      favorites: [{}],
+      favorites: null,
     }
   }
   componentWillMount() {
@@ -20,13 +20,19 @@ class Favorites extends React.Component {
       })
     }
   }
-
   render() {
     return (
       <Layout>
-        {this.state.favorites.map((fav, index) => (
-          <PropertyTeaser property={fav}></PropertyTeaser>
-        ))}
+        {this.state.favorites[0] &&
+          this.state.favorites.map((fav, index) => (
+            <PropertyTeaser property={fav}></PropertyTeaser>
+          ))
+        }
+        {!this.state.favorites[0] &&
+
+          <h3>No favorites added yet.</h3>
+        }
+
       </Layout>
 
     )

@@ -8,6 +8,7 @@ const postQuery = `{
         field_l_addressstreet
         field_l_remarks
         field_price
+        field_l_updatedate
         childFile {
           childImageSharp {
             gatsbyImageData

@@ -92,18 +92,24 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
-  // touch nodes to ensure they aren't garbage collected
-  ;[...getNodesByType(`property`)].forEach(node =>
-    touchNode({ nodeId: node.id })
-  )
+    // touch nodes to ensure they aren't garbage collected
+    ;[...getNodesByType(`property`)].forEach(node =>
+      touchNode({ nodeId: node.id })
+    )
 }
-
+const toTimestamp = (strDate) => {
+  const dt = Date.parse(strDate);
+  return dt / 1000;
+}
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
   const { createNode, createNodeField } = actions
 
   if (node.internal.type === `property`) {
     if (node.field_price) {
       node.field_price = parseInt(node.field_price)
+    }
+    if (node.field_l_updatedate) {
+      node.field_l_updatedate = toTimestamp(node.field_l_updatedate)
     }
     if (node.field_acreage) {
       node.field_acreage = parseInt(node.field_acreage)

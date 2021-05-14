@@ -75,6 +75,8 @@ module.exports = {
         apiKey: process.env.ALGOLIA_ADMIN_API_KEY,
         queries,
         chunkSize: 10000, // default: 1000
+        enablePartialUpdates: true,
+        matchFields: ['mlsid', 'field_l_updatedate'],
       },
     },
     "gatsby-plugin-theme-ui",
