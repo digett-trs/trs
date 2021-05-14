@@ -23,6 +23,8 @@ import {
   connectRefinementList,
   connectRange,
   MenuSelect,
+  RefinementList,
+  SortBy,
 } from "react-instantsearch-dom"
 
 const searchClient = algoliasearch(
@@ -51,11 +53,28 @@ const AdditionalProperties = props => (
           }}
         >
           <h3>Property Search</h3>
-          <SearchBox />
+          <SearchBox
+            searchAsYouType={false}
+            translations={{
+              placeholder: 'Search by word or phrase',
+            }}
+          />
+          <h2>Sort By</h2>
+          <SortBy
+            defaultRefinement="additional_properties_price_desc"
+            items={[
+              { value: 'additional_properties_price_desc', label: 'Price: High to Low' },
+              { value: 'additional_properties_price_asc', label: 'Price: Low to High' },
+              { value: 'additional_properties_acreage_desc', label: 'Acreage: High to Low' },
+              { value: 'additional_properties_acreage_asc', label: 'Acreage: Low to High' },
+            ]}
+          />
           <h3>Price Range</h3>
           <ConnectedRange attribute="field_price" />
           <h3>County</h3>
           <CustomRefinementList attribute="field_county" />
+          <h3>Acreage Range</h3>
+          <ConnectedRange attribute="field_acreage" />
         </div>
 
         <div
@@ -118,7 +137,7 @@ class Consumer extends React.Component {
         selected={selected}
         onSelectedChanged={this.changed}
         overrideStrings={{
-          selectSomeItems: "Select Some Counties",
+          selectSomeItems: "Select County",
           allItemsAreSelected: "All Counties are Selected",
           selectAll: "Select All",
           search: "Search",
@@ -127,7 +146,7 @@ class Consumer extends React.Component {
     )
   }
 }
-class RefinementList extends Component {
+class RefinementListDis extends Component {
   constructor(props) {
     super(props)
     // this.state = { value: '' };
