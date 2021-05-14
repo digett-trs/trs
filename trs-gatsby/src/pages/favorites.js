@@ -20,6 +20,7 @@ class Favorites extends React.Component {
       })
     }
   }
+
   render() {
     return (
       <Layout>
