@@ -60,7 +60,7 @@ const AdditionalProperties = props => (
             }}
           />
           <h2>Sort By</h2>
-          <SortBy
+          {/* <SortBy
             defaultRefinement="additional_properties_price_desc"
             items={[
               { value: 'additional_properties_price_desc', label: 'Price: High to Low' },
@@ -68,7 +68,7 @@ const AdditionalProperties = props => (
               { value: 'additional_properties_acreage_desc', label: 'Acreage: High to Low' },
               { value: 'additional_properties_acreage_asc', label: 'Acreage: Low to High' },
             ]}
-          />
+          /> */}
           <h3>Price Range</h3>
           <ConnectedRange attribute="field_price" />
           <h3>County</h3>
