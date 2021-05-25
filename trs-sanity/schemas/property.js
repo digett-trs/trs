@@ -22,6 +22,11 @@ export default {
       },
     },
     {
+      title: "MLSID",
+      name: "mlsid",
+      type: "number",
+    },
+    {
       title: "Property Summary",
       name: "propertySummary",
       type: "text",

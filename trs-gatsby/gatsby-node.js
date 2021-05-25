@@ -26,26 +26,7 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-  const pageTemplate = path.resolve("src/templates/page.js")
-  pages.data.page.nodes.forEach(node => {
-    if (node.slug.current == "home") {
-      createPage({
-        path: `/`,
-        component: pageTemplate,
-        context: {
-          slug: node.slug.current,
-        },
-      })
-    } else {
-      createPage({
-        path: `/${node.slug.current}`,
-        component: pageTemplate,
-        context: {
-          slug: node.slug.current,
-        },
-      })
-    }
-  })
+
   const ourPropertyTemplate = path.resolve("src/templates/ourProperty.js")
   pages.data.ourproperty.nodes.forEach(node => {
     createPage({
@@ -81,25 +62,55 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
+  const pageTemplate = path.resolve("src/templates/page.js")
   const additionalPropertiesTemplate = path.resolve(
     "src/templates/additionalProperties.js"
   )
-  createPage({
-    path: `/additionalproperties2`,
-    component: additionalPropertiesTemplate,
+  pages.data.page.nodes.forEach(node => {
+    if (node.slug.current == "home") {
+      createPage({
+        path: `/`,
+        component: pageTemplate,
+        context: {
+          slug: node.slug.current,
+        },
+      })
+    }
+
+    if (node.slug.current == "view-additional-listings") {
+      createPage({
+        path: `/view-additional-listings`,
+        component: additionalPropertiesTemplate,
+      })
+    } else {
+      createPage({
+        path: `/${node.slug.current}`,
+        component: pageTemplate,
+        context: {
+          slug: node.slug.current,
+        },
+      })
+    }
   })
+  // const additionalPropertiesTemplate = path.resolve(
+  //   "src/templates/additionalProperties.js"
+  // )
+  // createPage({
+  //   path: `/additionalproperties2`,
+  //   component: additionalPropertiesTemplate,
+  // })
 }
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
-    // touch nodes to ensure they aren't garbage collected
-    ;[...getNodesByType(`property`)].forEach(node =>
-      touchNode({ nodeId: node.id })
-    )
+  // touch nodes to ensure they aren't garbage collected
+  ;[...getNodesByType(`property`)].forEach(node =>
+    touchNode({ nodeId: node.id })
+  )
 }
-const toTimestamp = (strDate) => {
-  const dt = Date.parse(strDate);
-  return dt / 1000;
+const toTimestamp = strDate => {
+  const dt = Date.parse(strDate)
+  return dt / 1000
 }
 exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
   const { createNode, createNodeField } = actions

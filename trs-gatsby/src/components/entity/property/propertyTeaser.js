@@ -5,6 +5,7 @@ import Img from "gatsby-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Favorite from "../property/favorite"
 const PropertyTeaser = ({ property }) => {
+  console.log(property)
   return (
     <div
       sx={{
@@ -21,13 +22,26 @@ const PropertyTeaser = ({ property }) => {
           width: ["100%", "45%", "40%"],
         }}
       >
-        {property.childFile && (
+        {property.image.asset && (
           <GatsbyImage
             sx={{
               maxWidth: "100%",
               height: "auto",
             }}
-            image={property.childFile.childImageSharp.gatsbyImageData}
+            image={property.image.asset.gatsbyImageData}
+            width={600}
+            aspectRatio={4 / 3}
+          />
+        )}
+        {property.image.childImageSharp && (
+          <GatsbyImage
+            sx={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
+            image={property.image.childImageSharp.gatsbyImageData}
+            width={600}
+            aspectRatio={4 / 3}
           />
         )}
         <Link to={"/property/" + property.mlsid}>View Ranch Details</Link>
@@ -41,11 +55,11 @@ const PropertyTeaser = ({ property }) => {
         <Favorite property={property}>Add to Favorites</Favorite>
         <div>
           <strong>County:</strong>
-          {property.field_county}
+          {property.county.countyName && property.county.countyName}
         </div>
         <div>
           <strong>Price:</strong>
-          {property.field_price}
+          {property.price}
         </div>
         <div>
           <strong>Acres:</strong>
