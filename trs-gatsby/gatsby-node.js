@@ -27,16 +27,16 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
-  const ourPropertyTemplate = path.resolve("src/templates/ourProperty.js")
-  pages.data.ourproperty.nodes.forEach(node => {
-    createPage({
-      path: `/our-property/${node.slug.current}`,
-      component: ourPropertyTemplate,
-      context: {
-        id: node.id,
-      },
-    })
-  })
+  // const ourPropertyTemplate = path.resolve("src/templates/ourProperty.js")
+  // pages.data.ourproperty.nodes.forEach(node => {
+  //   createPage({
+  //     path: `/our-property/${node.slug.current}`,
+  //     component: ourPropertyTemplate,
+  //     context: {
+  //       id: node.id,
+  //     },
+  //   })
+  // })
   const propertyTemplate = path.resolve("src/templates/property.js")
   pages.data.property.nodes.forEach(node => {
     createPage({
@@ -47,21 +47,21 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-  const postsPerPage = 6
-  const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-  const insightsTemplate = path.resolve("src/templates/properties.js")
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: i === 0 ? `/property` : `/property/${i + 1}`,
-      component: insightsTemplate,
-      context: {
-        limit: postsPerPage,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1,
-      },
-    })
-  })
+  // const postsPerPage = 6
+  // const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
+  // const insightsTemplate = path.resolve("src/templates/properties.js")
+  // Array.from({ length: numPages }).forEach((_, i) => {
+  //   createPage({
+  //     path: i === 0 ? `/property` : `/property/${i + 1}`,
+  //     component: insightsTemplate,
+  //     context: {
+  //       limit: postsPerPage,
+  //       skip: i * postsPerPage,
+  //       numPages,
+  //       currentPage: i + 1,
+  //     },
+  //   })
+  // })
   const pageTemplate = path.resolve("src/templates/page.js")
   const additionalPropertiesTemplate = path.resolve(
     "src/templates/additionalProperties.js"
@@ -112,8 +112,26 @@ const toTimestamp = strDate => {
   const dt = Date.parse(strDate)
   return dt / 1000
 }
-exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
+exports.onCreateNode = async ({
+  node,
+  actions,
+  getNode,
+  createNodeId,
+  getCache,
+}) => {
   const { createNode, createNodeField } = actions
+  if (node.internal.type === `SanityProperty`) {
+    if (node.county) {
+      // var county = getNode(node.county._ref)
+      // console.log(county.countyName)
+      // node.happiness = county.countyName
+      // createNodeField({
+      //   node,
+      //   name: `happiness`,
+      //   value: county.countyName,
+      // })
+    }
+  }
 
   if (node.internal.type === `property`) {
     if (node.field_price) {
@@ -166,4 +184,57 @@ async function createImages(createNode, node, actions, createNodeId, getCache) {
     })
   )
   return imageIds
+}
+
+// exports.createSchemaCustomization = ({ actions, schema }) => {
+//   actions.createTypes([
+//     schema.buildObjectType({
+//       name: "SanityProperty",
+//       interfaces: ["Node"],
+//       fields: {
+//         county: {
+//           type: "text",
+//           resolve(source, args, context, info) {
+//             return "TESTER"
+//           },
+//         },
+//       },
+//     }),
+//   ])
+// }
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    // `SanityBlogPost` being the type name you want to extend
+    SanityProperty: {
+      // `happiness` being the field name you want to add
+      happiness: {
+        // type is the _GraphQL_ type name, so you can do `String!` for "non-null string", `Int` for integer, `SanityCategory` for a document or object of type  `SanityCategory`.
+        type: "String",
+        resolve(source, args, context, info) {
+          console.log("------HERE------")
+          console.log(source)
+          return "is customization through GraphQL"
+        },
+      },
+    },
+  })
+}
+
+exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
+  actions.createTypes([
+    schema.buildObjectType({
+      name: "SanityProperty",
+      interfaces: ["Node"],
+      fields: {
+        ourcounty: {
+          type: "String",
+          resolve(source, args, context, info) {
+            county = getNode(source.county._ref)
+            return county.countyName
+          },
+        },
+      },
+    }),
+  ])
 }

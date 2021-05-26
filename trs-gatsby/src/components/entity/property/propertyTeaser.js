@@ -22,18 +22,18 @@ const PropertyTeaser = ({ property }) => {
           width: ["100%", "45%", "40%"],
         }}
       >
-        {property.image.asset && (
+        {property.sanityimage && (
           <GatsbyImage
             sx={{
               maxWidth: "100%",
               height: "auto",
             }}
-            image={property.image.asset.gatsbyImageData}
+            image={property.sanityimage.asset.gatsbyImageData}
             width={600}
             aspectRatio={4 / 3}
           />
         )}
-        {property.image.childImageSharp && (
+        {property.image && (
           <GatsbyImage
             sx={{
               maxWidth: "100%",
@@ -55,7 +55,8 @@ const PropertyTeaser = ({ property }) => {
         <Favorite property={property}>Add to Favorites</Favorite>
         <div>
           <strong>County:</strong>
-          {property.county.countyName && property.county.countyName}
+          {property.sanitycounty && property.sanitycounty.countyName}
+          {property.county && property.county}
         </div>
         <div>
           <strong>Price:</strong>
@@ -63,11 +64,11 @@ const PropertyTeaser = ({ property }) => {
         </div>
         <div>
           <strong>Acres:</strong>
-          {property.field_acreage}
+          {property.acreage}
         </div>
         <div>
           <strong>Description:</strong>
-          {property.field_l_remarks}
+          {property.description}
         </div>
         <div>
           <strong>MLSID:</strong>

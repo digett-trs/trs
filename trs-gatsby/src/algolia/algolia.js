@@ -26,14 +26,12 @@ const postQuery = `{
       objectID: mlsid
       mlsid: mlsid
       address: propertyName
-      county: county {
-        countyName
-      }
+      county: ourcounty
       price: price
       acreage: acreage
       description: propertySummary
       updated: _updatedAt
-      image: propertyFeaturedImage {
+      sanityimage: propertyFeaturedImage {
         asset {
           gatsbyImageData(
             width: 600
