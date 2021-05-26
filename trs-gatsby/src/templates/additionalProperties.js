@@ -56,27 +56,45 @@ const AdditionalProperties = props => (
           <SearchBox
             searchAsYouType={false}
             translations={{
-              placeholder: 'Search by word or phrase',
+              placeholder: "Search by word or phrase",
             }}
           />
           <h2>Sort By</h2>
           <SortBy
             defaultRefinement="additional_properties_price_desc"
             items={[
-              { value: 'additional_properties_price_desc', label: 'Price: High to Low' },
-              { value: 'additional_properties_price_asc', label: 'Price: Low to High' },
-              { value: 'additional_properties_acreage_desc', label: 'Acreage: High to Low' },
-              { value: 'additional_properties_acreage_asc', label: 'Acreage: Low to High' },
-              { value: 'additional_properties_date_desc', label: 'Newest to Oldest' },
-              { value: 'additional_properties_date_asc', label: 'Oldest to Newest' },
+              {
+                value: "additional_properties_price_desc",
+                label: "Price: High to Low",
+              },
+              {
+                value: "additional_properties_price_asc",
+                label: "Price: Low to High",
+              },
+              {
+                value: "additional_properties_acreage_desc",
+                label: "Acreage: High to Low",
+              },
+              {
+                value: "additional_properties_acreage_asc",
+                label: "Acreage: Low to High",
+              },
+              {
+                value: "additional_properties_date_desc",
+                label: "Newest to Oldest",
+              },
+              {
+                value: "additional_properties_date_asc",
+                label: "Oldest to Newest",
+              },
             ]}
           />
           <h3>Price Range</h3>
-          <ConnectedRange attribute="field_price" />
+          <ConnectedRange attribute="price" />
           <h3>County</h3>
-          <CustomRefinementList attribute="field_county" />
+          <CustomRefinementList attribute="county" />
           <h3>Acreage Range</h3>
-          <ConnectedRange attribute="field_acreage" />
+          <ConnectedRange attribute="acreage" />
         </div>
 
         <div

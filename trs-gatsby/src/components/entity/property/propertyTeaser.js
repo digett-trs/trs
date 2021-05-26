@@ -51,7 +51,7 @@ const PropertyTeaser = ({ property }) => {
           width: ["calc(100%)", "calc(55% - 40px)", "calc(60% - 40px)"],
         }}
       >
-        <h1>{property.mlsid}</h1>
+        <h1>{property.address}</h1>
         <Favorite property={property}>Add to Favorites</Favorite>
         <div>
           <strong>County:</strong>
