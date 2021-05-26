@@ -5,7 +5,6 @@ import Img from "gatsby-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Favorite from "../property/favorite"
 const PropertyTeaser = ({ property }) => {
-  console.log(property)
   return (
     <div
       sx={{

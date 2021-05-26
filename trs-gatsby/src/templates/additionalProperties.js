@@ -121,7 +121,7 @@ function HitComponent({ hit }) {
   // console.log(hit)
   return (
     <PropertyTeaser property={hit} className="hit">
-      {hit.field_price}
+      {hit.price}
     </PropertyTeaser>
   )
 }
@@ -144,10 +144,11 @@ class Consumer extends React.Component {
     })
   }
   render() {
+    console.log(this)
     const { selected } = this.state
     const options = []
     this.props.items.map(item => {
-      // console.log(item)
+      console.log(item)
       options.push({ label: item.label, value: item.label })
     })
 
@@ -188,6 +189,7 @@ class RefinementListDis extends Component {
 
   render() {
     const { selectedOption } = this.state
+    console.log(this)
     return (
       // <Select
       //   options={this.props.items}
