@@ -24,7 +24,7 @@ export default {
     {
       title: "MLSID",
       name: "mlsid",
-      type: "number",
+      type: "string",
     },
     {
       title: "Property Summary",

@@ -3,12 +3,13 @@ const postQuery = `{
     nodes{
       objectID: mlsid
       mlsid
-      acreage: field_acreage
-      county: field_county
-      address: field_l_addressstreet
-      description: field_l_remarks
-      price: field_price
-      updated: field_l_updatedate
+      acreage: acreage
+      county: county
+      address: propertyName
+      description: propertyDescription
+      price: price
+      updated: _updatedAt
+      slug: mlsid
       image: childFile {
         childImageSharp {
           gatsbyImageData(
@@ -31,6 +32,9 @@ const postQuery = `{
       acreage: acreage
       description: propertySummary
       updated: _updatedAt
+      slug: slug{
+        current
+      }
       sanityimage: propertyFeaturedImage {
         asset {
           gatsbyImageData(

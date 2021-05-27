@@ -4,10 +4,14 @@ export const ourPropertyFullFragment = graphql`
   fragment ourPropertyFullFragment on SanityProperty {
     id
     propertyName
+    price
+    acreage
+    mlsid
     county {
       countyName
       _rawCountyDescrition(resolveReferences: { maxDepth: 10 })
     }
+    ourcounty
     propertyAerialMap {
       asset {
         url
@@ -23,9 +27,7 @@ export const ourPropertyFullFragment = graphql`
       teamLastName
       teamEmail
     }
-    propertyDescrition {
-      _rawChildren(resolveReferences: { maxDepth: 10 })
-    }
+    _rawPropertyDescrition(resolveReferences: { maxDepth: 10 })
     propertyFeaturedImage {
       asset {
         gatsbyImageData

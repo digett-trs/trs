@@ -5,12 +5,47 @@ import Serializers from "../components/serializers/serializers"
 import Layout from "../components/layout"
 import { Field, jsx } from "theme-ui"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
+import { Carousel } from "react-responsive-carousel"
 import Img from "gatsby-image"
+
+const ReturnImage = ({ image }) => {
+  if (image.asset) {
+    return (
+      <GatsbyImage
+        sx={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
+        image={image.asset.gatsbyImageData}
+        width={600}
+        aspectRatio={4 / 2}
+      />
+    )
+  } else {
+    return (
+      <GatsbyImage
+        sx={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
+        image={image.childImageSharp.gatsbyImageData}
+        width={600}
+        aspectRatio={4 / 2}
+      />
+    )
+  }
+}
 const Property = ({ data }) => {
-  const node = data.property
-  const images = node.childrenFile
+  // const node = data.property
+  // const images = node.childrenFile
+  if (data.property) {
+    var node = data.property
+    var images = node.childrenFile
+  } else {
+    var node = data.ourproperty
+    var images = node.propertyImages
+  }
   console.log(node)
   return (
     <Layout>
@@ -18,14 +53,32 @@ const Property = ({ data }) => {
         <h1>{node.mlsid}</h1>
         <Carousel autoPlay interval="5000" transitionTime="1000">
           {images.map((image, index) => (
-            <Img fluid={image.childImageSharp.fluid} />
+            <ReturnImage image={image}></ReturnImage>
           ))}
         </Carousel>
-        <div><strong>County:</strong>{node.field_county}</div>
-        <div><strong>Price:</strong>{node.field_price}</div>
-        <div><strong>Acres:</strong>{node.field_acreage}</div>
-        <div><strong>Description:</strong>{node.field_l_remarks}</div>
-        <div><strong>MLSID:</strong>{node.mlsid}</div>
+        <div>
+          <strong>County:</strong>
+          {node.ourcounty}
+        </div>
+        <div>
+          <strong>Price:</strong>
+          {node.price}
+        </div>
+        <div>
+          <strong>Acres:</strong>
+          {node.acreage}
+        </div>
+        <div>
+          <strong>Description:</strong>
+          <BlockContent
+            blocks={node._rawPropertyDescrition}
+            serializers={Serializers}
+          />
+        </div>
+        <div>
+          <strong>MLSID:</strong>
+          {node.mlsid}
+        </div>
       </div>
     </Layout>
   )
@@ -36,6 +89,9 @@ export const postQuery = graphql`
   query PropertyBySlug($mlsid: String!) {
     property: property(mlsid: { eq: $mlsid }) {
       ...propertyFullFragment
+    }
+    ourproperty: sanityProperty(mlsid: { eq: $mlsid }) {
+      ...ourPropertyFullFragment
     }
   }
 `

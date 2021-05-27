@@ -4,6 +4,14 @@ import { Link } from "gatsby"
 import Img from "gatsby-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Favorite from "../property/favorite"
+import { render } from "react-dom"
+const SlugPath = ({ slug }) => {
+  if (slug.current) {
+    return <Link to={"/property/" + slug.current}>View Ranch Details</Link>
+  } else {
+    return <Link to={"/property/" + slug}>View Ranch Details</Link>
+  }
+}
 const PropertyTeaser = ({ property }) => {
   return (
     <div
@@ -29,7 +37,7 @@ const PropertyTeaser = ({ property }) => {
             }}
             image={property.sanityimage.asset.gatsbyImageData}
             width={600}
-            aspectRatio={4 / 3}
+            aspectRatio={4 / 2}
           />
         )}
         {property.image && (
@@ -43,7 +51,7 @@ const PropertyTeaser = ({ property }) => {
             aspectRatio={4 / 3}
           />
         )}
-        <Link to={"/property/" + property.mlsid}>View Ranch Details</Link>
+        <SlugPath slug={property.slug}></SlugPath>
       </div>
       <div
         sx={{

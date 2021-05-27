@@ -7,6 +7,7 @@ exports.createPages = async ({ graphql, actions }) => {
       ourproperty: allSanityProperty {
         nodes {
           id
+          mlsid
           slug {
             current
           }
@@ -41,6 +42,15 @@ exports.createPages = async ({ graphql, actions }) => {
   pages.data.property.nodes.forEach(node => {
     createPage({
       path: `/property/${node.mlsid}`,
+      component: propertyTemplate,
+      context: {
+        mlsid: node.mlsid,
+      },
+    })
+  })
+  pages.data.ourproperty.nodes.forEach(node => {
+    createPage({
+      path: `/property/${node.slug.current}`,
       component: propertyTemplate,
       context: {
         mlsid: node.mlsid,
@@ -112,38 +122,19 @@ const toTimestamp = strDate => {
   const dt = Date.parse(strDate)
   return dt / 1000
 }
-exports.onCreateNode = async ({
-  node,
-  actions,
-  getNode,
-  createNodeId,
-  getCache,
-}) => {
-  const { createNode, createNodeField } = actions
-  if (node.internal.type === `SanityProperty`) {
-    if (node.county) {
-      // var county = getNode(node.county._ref)
-      // console.log(county.countyName)
-      // node.happiness = county.countyName
-      // createNodeField({
-      //   node,
-      //   name: `happiness`,
-      //   value: county.countyName,
-      // })
-    }
-  }
-
+exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
+  const { createNode } = actions
   if (node.internal.type === `property`) {
-    if (node.field_price) {
-      node.field_price = parseInt(node.field_price)
+    if (node.price) {
+      node.price = parseInt(node.price)
     }
-    if (node.field_l_updatedate) {
-      node.field_l_updatedate = toTimestamp(node.field_l_updatedate)
+    if (node._updatedAt) {
+      node._updatedAt = toTimestamp(node._updatedAt)
     }
-    if (node.field_acreage) {
-      node.field_acreage = parseInt(node.field_acreage)
+    if (node.acreage) {
+      node.acreage = parseInt(node.acreage)
     }
-    if (node.field_images) {
+    if (node.propertyImages) {
       try {
         const imageIds = await createImages(
           createNode,
@@ -165,7 +156,7 @@ exports.onCreateNode = async ({
 async function createImages(createNode, node, actions, createNodeId, getCache) {
   var imageIds = []
   await Promise.all(
-    node.field_images.map(async image => {
+    node.propertyImages.map(async image => {
       let fileNode
       try {
         fileNode = await createRemoteFileNode({
@@ -184,41 +175,6 @@ async function createImages(createNode, node, actions, createNodeId, getCache) {
     })
   )
   return imageIds
-}
-
-// exports.createSchemaCustomization = ({ actions, schema }) => {
-//   actions.createTypes([
-//     schema.buildObjectType({
-//       name: "SanityProperty",
-//       interfaces: ["Node"],
-//       fields: {
-//         county: {
-//           type: "text",
-//           resolve(source, args, context, info) {
-//             return "TESTER"
-//           },
-//         },
-//       },
-//     }),
-//   ])
-// }
-
-exports.createResolvers = ({ createResolvers }) => {
-  createResolvers({
-    // `SanityBlogPost` being the type name you want to extend
-    SanityProperty: {
-      // `happiness` being the field name you want to add
-      happiness: {
-        // type is the _GraphQL_ type name, so you can do `String!` for "non-null string", `Int` for integer, `SanityCategory` for a document or object of type  `SanityCategory`.
-        type: "String",
-        resolve(source, args, context, info) {
-          console.log("------HERE------")
-          console.log(source)
-          return "is customization through GraphQL"
-        },
-      },
-    },
-  })
 }
 
 exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
