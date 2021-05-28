@@ -5,14 +5,17 @@ import Img from "gatsby-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Favorite from "../property/favorite"
 import { render } from "react-dom"
+// add property type value? If sanity property or drupal?
 const SlugPath = ({ slug }) => {
-  if (slug.current) {
+  console.log(slug)
+  if (slug.current !== undefined) {
     return <Link to={"/property/" + slug.current}>View Ranch Details</Link>
   } else {
     return <Link to={"/property/" + slug}>View Ranch Details</Link>
   }
 }
 const PropertyTeaser = ({ property }) => {
+  console.log(property)
   return (
     <div
       sx={{

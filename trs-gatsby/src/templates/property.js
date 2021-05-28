@@ -38,9 +38,9 @@ const ReturnImage = ({ image }) => {
 }
 const ReturnCounty = ({ county }) => {
   if (county.countyName) {
-    return (county.countyName)
+    return county.countyName
   } else {
-    return (county)
+    return county
   }
 }
 const Property = ({ data }) => {
@@ -49,11 +49,12 @@ const Property = ({ data }) => {
   if (data.property) {
     var node = data.property
     var images = node.childrenFile
+    var county = node.county
   } else {
     var node = data.ourproperty
     var images = node.propertyImages
+    var county = node.ourcounty
   }
-  console.log(node)
   return (
     <Layout>
       <div>
@@ -65,7 +66,7 @@ const Property = ({ data }) => {
         </Carousel>
         <div>
           <strong>County:</strong>
-          <ReturnCounty county={node.county}></ReturnCounty>
+          {county}
         </div>
         <div>
           <strong>Price:</strong>
@@ -77,7 +78,6 @@ const Property = ({ data }) => {
         </div>
         <div>
           <strong>Description:</strong>
-
         </div>
         <div>
           <strong>MLSID:</strong>
