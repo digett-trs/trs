@@ -25,7 +25,8 @@ class Favorites extends React.Component {
       <Layout>
         {this.state.favorites[0] &&
           this.state.favorites.map((fav, index) => (
-            <PropertyTeaser property={fav}></PropertyTeaser>
+            // <PropertyTeaser property={fav}></PropertyTeaser>
+            'test'
           ))
         }
         {!this.state.favorites[0] &&

@@ -8,10 +8,13 @@ import { render } from "react-dom"
 // add property type value? If sanity property or drupal?
 const SlugPath = ({ slug }) => {
   console.log(slug)
-  if (slug.current !== undefined) {
-    return <Link to={"/property/" + slug.current}>View Ranch Details</Link>
-  } else {
-    return <Link to={"/property/" + slug}>View Ranch Details</Link>
+  if (slug > 0) {
+    if (slug.current > 0) {
+      return <Link to={"/property/" + slug.current}>View Ranch Details</Link>
+    } else {
+      return <Link to={"/property/" + slug}>View Ranch Details</Link>
+    }
+    return 'test'
   }
 }
 const PropertyTeaser = ({ property }) => {
