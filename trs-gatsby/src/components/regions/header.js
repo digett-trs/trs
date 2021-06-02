@@ -4,106 +4,80 @@ import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
-export default function Header() {
-  return (
-    <StaticQuery
-      query={graphql`
-        query HeadingQuery {
-          sanityMenu {
-            title
-            _rawChildren(resolveReferences: { maxDepth: 10 })
-          }
-          sanitySiteSettings {
-            logo {
-              asset {
-                gatsbyImageData
+import Burger from "../burger"
+import Menu from "../menu"
+class Header extends React.Component {
+  constructor(props) {
+    super(props)
+    // this.state = { value: '' };
+    this.state = {
+      menuOpen: false,
+    }
+    this.toggleFilters = this.toggleFilters.bind(this)
+  }
+  toggleFilters() {
+    this.setState(prevState => ({
+      filtersOpen: !prevState.filtersOpen,
+    }))
+    console.log(this.state.filtersOpen)
+  }
+  render() {
+    return (
+      <StaticQuery
+        query={graphql`
+          query HeadingQuery {
+            sanityMenu {
+              title
+              _rawChildren(resolveReferences: { maxDepth: 10 })
+            }
+            sanitySiteSettings {
+              logo {
+                asset {
+                  gatsbyImageData
+                }
               }
             }
           }
-        }
-      `}
-      render={data => (
-        <header>
-          <div
-            sx={{
-              maxWidth: ["400px", "800px", "1000px"],
-              padding: "0px 10%",
-              margin: "0 auto",
-            }}
-          >
-            <Link to={"/"}>
-              <GatsbyImage
-                sx={{
-                  maxWidth: "600px",
-                }}
-                image={data.sanitySiteSettings.logo.asset.gatsbyImageData}
-              />
-            </Link>
+        `}
+        render={data => (
+          <header>
             <div
               sx={{
-                padding: "20px 0px",
+                maxWidth: ["400px", "800px", "1000px"],
+                padding: ["15px 5%", "15px 10%", "15px 10%"],
                 margin: "0 auto",
-                boxSizing: "content-box",
-                display: "flex",
+                display: ["flex", "null", "null"],
+                justifyContent: "space-between",
               }}
             >
-              {data.sanityMenu._rawChildren.map((menuItem, index) => (
-                <div
-                  key={index}
+              <Link
+                to={"/"}
+                sx={{
+                  maxWidth: "220px",
+                }}
+              >
+                <GatsbyImage
                   sx={{
-                    width: "calc(100% / 7)",
-                    position: "relative",
-                    "&:hover > div": {
-                      display: "block",
-                      visibility: "visible",
-                      opacity: 1,
-                    },
+                    maxWidth: "600px",
                   }}
-                >
-                  <Link
-                    sx={{
-                      color: "black",
-                      textDecoration: "none",
-                    }}
-                    to={"/" + menuItem.children.document.slug.current}
-                  >
-                    {menuItem.children.title}
-                  </Link>
-                  {menuItem.children.submenu && (
-                    <div
-                      sx={{
-                        visibility: "hidden",
-                        opacity: 0,
-                        position: "absolute",
-                        transition: "all 0.5s ease",
-                        paddingTop: "1rem",
-                        left: 0,
-                        display: "none",
-                        minWidth: "300px",
-                      }}
-                    >
-                      {menuItem.children.submenu.map((menuSubItem, index) => (
-                        <Link
-                          sx={{
-                            color: "black",
-                            textDecoration: "none",
-                            display: "block",
-                            padding: "10px 0px",
-                            backgroundColor: "white",
-                          }}
-                          to={"/" + menuSubItem.document.slug.current}
-                        >
-                          {menuSubItem.document.title}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                  image={data.sanitySiteSettings.logo.asset.gatsbyImageData}
+                />
+              </Link>
+              <Burger></Burger>
+              <div
+                sx={{
+                  padding: "20px 0px",
+                  margin: "0 auto",
+                  boxSizing: "content-box",
+                  display: ["none", "flex", "flex"],
+                }}
+              >
+                <Menu></Menu>
+              </div>
             </div>
-          </div>
-        </header>
-      )}
-    />
-  )
+          </header>
+        )}
+      />
+    )
+  }
 }
