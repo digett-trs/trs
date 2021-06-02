@@ -31,87 +31,154 @@ const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
   process.env.ALGOLIA_ADMIN_API_KEY
 )
+class AdditionalProperties extends React.Component {
+  constructor(props) {
+    super(props)
+    // this.state = { value: '' };
+    this.state = {
+      filtersOpen: false,
+    }
+    this.toggleFilters = this.toggleFilters.bind(this)
+  }
+  toggleFilters() {
+    this.setState(prevState => ({
+      filtersOpen: !prevState.filtersOpen,
+    }))
+    console.log(this.state.filtersOpen)
+  }
 
-const AdditionalProperties = props => (
-  <Layout>
-    <InstantSearch
-      searchClient={searchClient}
-      indexName="additional_properties"
-      searchState={props.searchState}
-      createURL={props.createURL}
-      onSearchStateChange={props.onSearchStateChange}
-    >
-      <div
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <div
-          sx={{
-            width: "200px",
-          }}
+  render() {
+    return (
+      <Layout>
+        <InstantSearch
+          searchClient={searchClient}
+          indexName="additional_properties"
+          searchState={this.props.searchState}
+          createURL={this.props.createURL}
+          onSearchStateChange={this.props.onSearchStateChange}
         >
-          <h3>Property Search</h3>
-          <SearchBox
-            searchAsYouType={false}
-            translations={{
-              placeholder: "Search by word or phrase",
+          <div
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: ["column", "row", "row"],
             }}
-          />
-          <h2>Sort By</h2>
-          <SortBy
-            defaultRefinement="additional_properties_price_desc"
-            items={[
-              {
-                value: "additional_properties_price_desc",
-                label: "Price: High to Low",
-              },
-              {
-                value: "additional_properties_price_asc",
-                label: "Price: Low to High",
-              },
-              {
-                value: "additional_properties_acreage_desc",
-                label: "Acreage: High to Low",
-              },
-              {
-                value: "additional_properties_acreage_asc",
-                label: "Acreage: Low to High",
-              },
-              {
-                value: "additional_properties_date_desc",
-                label: "Newest to Oldest",
-              },
-              {
-                value: "additional_properties_date_asc",
-                label: "Oldest to Newest",
-              },
-            ]}
-          />
-          <h3>Price Range</h3>
-          <ConnectedRange attribute="price" />
-          <h3>County</h3>
-          <CustomRefinementList attribute="county" />
-          <h3>Acreage Range</h3>
-          <ConnectedRange attribute="acreage" />
-        </div>
-
-        <div
-          sx={{
-            width: "calc(100% - 240px)",
-          }}
-        >
-          <div>
-            <MyHits />
-            <Pagination />
+          >
+            <div
+              sx={{
+                width: ["100%", "100%", "200px"],
+              }}
+            >
+              <h3>Property Search</h3>
+              <div
+                sx={{
+                  border: "thin solid blue",
+                  display: ["inline-block", "none", "none"],
+                  padding: "5px 10px",
+                  marginBottom: "20px",
+                }}
+                onClick={() => {
+                  this.toggleFilters()
+                }}
+              >
+                Filters
+              </div>
+              <div
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  zIndex: "10002",
+                  position: ["fixed", "relative", "relative"],
+                  top: "0px",
+                  left: "0px",
+                  backgroundColor: "white",
+                  animation: "0.3s ease-out 0s 1 normal none",
+                  display: [
+                    this.state.filtersOpen ? "block" : "none",
+                    "block",
+                    "block",
+                  ],
+                }}
+              >
+                <div
+                  sx={{
+                    padding: "20px",
+                  }}
+                >
+                  <div
+                    sx={{
+                      border: "thin solid blue",
+                      display: ["inline-block", "none", "none"],
+                      padding: "5px 10px",
+                      marginBottom: "20px",
+                    }}
+                    onClick={() => {
+                      this.toggleFilters()
+                    }}
+                  >
+                    Done
+                  </div>
+                  <SearchBox
+                    searchAsYouType={false}
+                    translations={{
+                      placeholder: "Search by word or phrase",
+                    }}
+                  />
+                  <h2>Sort By</h2>
+                  <SortBy
+                    defaultRefinement="additional_properties_price_desc"
+                    items={[
+                      {
+                        value: "additional_properties_price_desc",
+                        label: "Price: High to Low",
+                      },
+                      {
+                        value: "additional_properties_price_asc",
+                        label: "Price: Low to High",
+                      },
+                      {
+                        value: "additional_properties_acreage_desc",
+                        label: "Acreage: High to Low",
+                      },
+                      {
+                        value: "additional_properties_acreage_asc",
+                        label: "Acreage: Low to High",
+                      },
+                      {
+                        value: "additional_properties_date_desc",
+                        label: "Newest to Oldest",
+                      },
+                      {
+                        value: "additional_properties_date_asc",
+                        label: "Oldest to Newest",
+                      },
+                    ]}
+                  />
+                  <h3>Price Range</h3>
+                  <ConnectedRange attribute="price" />
+                  <h3>County</h3>
+                  <CustomRefinementList attribute="county" />
+                  <h3>Acreage Range</h3>
+                  <ConnectedRange attribute="acreage" />
+                </div>
+              </div>
+            </div>
+            <div
+              sx={{
+                width: ["100%", "100%", "calc(100% - 240px)"],
+              }}
+            >
+              <div>
+                <MyHits />
+                <Pagination />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </InstantSearch>
-  </Layout>
-)
-
+        </InstantSearch>
+      </Layout>
+    )
+  }
+}
 const MyHits = connectHits(({ hits }) => {
   const hs = hits.map(hit => <HitComponent key={hit.objectID} hit={hit} />)
   return <div id="hits">{hs}</div>
