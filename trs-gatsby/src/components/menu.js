@@ -44,6 +44,7 @@ const Menu = open => {
               sx={{
                 width: ["100%", "calc(100% / 7)", "calc(100% / 7)"],
                 position: "relative",
+                marginBottom: "10px",
                 "&:hover > div": {
                   display: "block",
                   visibility: "visible",
@@ -55,6 +56,7 @@ const Menu = open => {
                 sx={{
                   color: "black",
                   textDecoration: "none",
+                  fontSize: ["24px", "18px", "18px"],
                 }}
                 to={"/" + menuItem.children.document.slug.current}
               >
@@ -63,14 +65,14 @@ const Menu = open => {
               {menuItem.children.submenu && (
                 <div
                   sx={{
-                    visibility: "hidden",
-                    opacity: 0,
-                    position: "absolute",
+                    visibility: ["visible", "hidden", "hidden"],
+                    opacity: ["1", "0", "0"],
+                    position: ["relative", "absolute", "absolute"],
                     transition: "all 0.5s ease",
-                    paddingTop: "1rem",
+                    paddingTop: ["0px", "1rem", "1rem"],
                     left: 0,
-                    display: "none",
-                    minWidth: "300px",
+                    display: ["block", "none", "none"],
+                    minWidth: ["auto", "300px", "300px"],
                   }}
                 >
                   {menuItem.children.submenu.map((menuSubItem, index) => (
@@ -79,8 +81,10 @@ const Menu = open => {
                         color: "black",
                         textDecoration: "none",
                         display: "block",
-                        padding: "10px 0px",
+                        padding: ["0px 0px", "10px 0px", "10px 0px"],
                         backgroundColor: "white",
+                        fontSize: "16px",
+                        textWrap: "wrap",
                       }}
                       to={"/" + menuSubItem.document.slug.current}
                     >

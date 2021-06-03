@@ -22,9 +22,9 @@ class Burger extends React.Component {
           padding: "0",
           zIndex: "1001",
           transition: "all 0.3s linear",
-          right: [this.props.open ? "15px" : "0px", "null", "null"],
-          top: [this.props.open ? "15px" : "0px", "null", "null"],
-          position: [this.props.open ? "fixed" : "relative", "null", "null"],
+          right: [this.props.open ? "15px" : "0px", "auto", "auto"],
+          top: [this.props.open ? "15px" : "0px", "auto", "auto"],
+          position: [this.props.open ? "fixed" : "relative", "auto", "auto"],
           transformOrigin: "1px",
         }}
       >
@@ -39,8 +39,8 @@ class Burger extends React.Component {
             transformOrigin: "1px",
             transform: [
               this.props.open ? "rotate(45deg)" : "rotate(0)",
-              "null",
-              "null",
+              "none",
+              "none",
             ],
           }}
         ></div>
@@ -53,11 +53,11 @@ class Burger extends React.Component {
             transition: "all 0.3s linear",
             position: "relative",
             transformOrigin: "1px",
-            opacity: [this.props.open ? "0" : "1", "null", "null"],
+            opacity: [this.props.open ? "0" : "1", "auto", "auto"],
             transform: [
               this.props.open ? "translateX(20px)" : "translateX(0)",
-              "null",
-              "null",
+              "none",
+              "none",
             ],
           }}
         ></div>
@@ -72,8 +72,8 @@ class Burger extends React.Component {
             transformOrigin: "1px",
             transform: [
               this.props.open ? "rotate(-45deg)" : "rotate(0)",
-              "null",
-              "null",
+              "none",
+              "none",
             ],
           }}
         ></div>
