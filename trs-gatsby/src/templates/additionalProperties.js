@@ -44,7 +44,6 @@ class AdditionalProperties extends React.Component {
     this.setState(prevState => ({
       filtersOpen: !prevState.filtersOpen,
     }))
-    console.log(this.state.filtersOpen)
   }
 
   render() {
@@ -185,7 +184,6 @@ const MyHits = connectHits(({ hits }) => {
 })
 
 function HitComponent({ hit }) {
-  // console.log(hit)
   return (
     <PropertyTeaser property={hit} className="hit">
       {hit.price}
@@ -204,18 +202,14 @@ class Consumer extends React.Component {
   }
 
   changed(data) {
-    console.log(data)
     this.setState({ selected: data }, () => {
       this.props.refine(this.state.selected)
-      console.log(this.state.selected)
     })
   }
   render() {
-    console.log(this)
     const { selected } = this.state
     const options = []
     this.props.items.map(item => {
-      console.log(item)
       options.push({ label: item.label, value: item.label })
     })
 
@@ -245,7 +239,6 @@ class RefinementListDis extends Component {
     this.handleSelectChange = this.handleSelectChange.bind(this)
   }
   handleSelectChange(item) {
-    console.log(item)
     this.setState(
       {
         value: item,
@@ -256,7 +249,6 @@ class RefinementListDis extends Component {
 
   render() {
     const { selectedOption } = this.state
-    console.log(this)
     return (
       // <Select
       //   options={this.props.items}
@@ -287,9 +279,6 @@ class Range extends Component {
   state = { currentValues: { min: this.props.min, max: this.props.max } }
 
   componentDidUpdate(prevProps) {
-    {
-      // console.log(this)
-    }
     if (
       this.props.canRefine &&
       (prevProps.currentRefinement.min !== this.props.currentRefinement.min ||

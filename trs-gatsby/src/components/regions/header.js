@@ -13,23 +13,19 @@ class Header extends React.Component {
     this.state = {
       menuOpen: false,
     }
-    this.toggleFilters = this.toggleFilters.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
   }
-  toggleFilters() {
+  toggleMenu() {
     this.setState(prevState => ({
-      filtersOpen: !prevState.filtersOpen,
+      menuOpen: !prevState.menuOpen,
     }))
-    console.log(this.state.filtersOpen)
+    console.log(this.state.menuOpen)
   }
   render() {
     return (
       <StaticQuery
         query={graphql`
           query HeadingQuery {
-            sanityMenu {
-              title
-              _rawChildren(resolveReferences: { maxDepth: 10 })
-            }
             sanitySiteSettings {
               logo {
                 asset {
@@ -63,17 +59,8 @@ class Header extends React.Component {
                   image={data.sanitySiteSettings.logo.asset.gatsbyImageData}
                 />
               </Link>
-              <Burger></Burger>
-              <div
-                sx={{
-                  padding: "20px 0px",
-                  margin: "0 auto",
-                  boxSizing: "content-box",
-                  display: ["none", "flex", "flex"],
-                }}
-              >
-                <Menu></Menu>
-              </div>
+              <Burger clickMe={this.toggleMenu} open={this.state.menuOpen} />
+              <Menu open={this.state.menuOpen}></Menu>
             </div>
           </header>
         )}
@@ -81,3 +68,5 @@ class Header extends React.Component {
     )
   }
 }
+
+export default Header
