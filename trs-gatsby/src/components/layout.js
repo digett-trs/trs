@@ -16,7 +16,6 @@ const Layout = ({ children }) => {
       }
     }
   `)
-
   return (
     <>
       <Header></Header>

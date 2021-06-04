@@ -11,6 +11,8 @@ import Rheostat from "rheostat"
 import algoliasearch from "algoliasearch/lite"
 import Select from "react-select"
 import MultiSelect from "@khanacademy/react-multi-select"
+import qs from "qs"
+
 import {
   InstantSearch,
   ClearRefinements,
@@ -44,6 +46,23 @@ class AdditionalProperties extends React.Component {
     this.setState(prevState => ({
       filtersOpen: !prevState.filtersOpen,
     }))
+  }
+  componentDidUpdate() {
+    // if (typeof window !== "undefined" && window) {
+    //   var searchState = JSON.parse(localStorage.getItem("searchState"))
+    //   if(searchState !== this.props.location.search){
+    //     localStorage.setItem("searchState", this.props.location.search)
+    //   }
+    //   if(searchState = this.props)
+    //   console.log(this.props)
+    //   // this.props.searchState
+    //   // this.setState({ fav: true })
+    // }
+    if (typeof window !== "undefined" && window) {
+      var searchState =
+        window.location.pathname + "?" + qs.stringify(this.props.searchState)
+      localStorage.setItem("searchState", searchState)
+    }
   }
 
   render() {

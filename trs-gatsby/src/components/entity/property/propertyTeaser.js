@@ -17,7 +17,6 @@ const SlugPath = ({ slug }) => {
   return ""
 }
 const PropertyTeaser = ({ property }) => {
-  console.log(property)
   return (
     <div
       sx={{

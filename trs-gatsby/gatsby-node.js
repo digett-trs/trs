@@ -87,9 +87,9 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
 
-    if (node.slug.current == "view-additional-listings") {
+    if (node.slug.current == "properties") {
       createPage({
-        path: `/view-additional-listings`,
+        path: `/properties`,
         component: additionalPropertiesTemplate,
       })
     } else {

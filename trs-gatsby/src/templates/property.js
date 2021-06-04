@@ -8,7 +8,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
 import Img from "gatsby-image"
-
+import BackToSearch from "../components/backToSearch"
 const ReturnImage = ({ image }) => {
   if (image.asset) {
     return (
@@ -46,18 +46,24 @@ const ReturnCounty = ({ county }) => {
 const Property = ({ data }) => {
   // const node = data.property
   // const images = node.childrenFile
+  console.log(data)
   if (data.property) {
     var node = data.property
     var images = node.childrenFile
     var county = node.county
+    var feedDescription = node.propertyDescription
+    console.log(feedDescription)
   } else {
     var node = data.ourproperty
     var images = node.propertyImages
     var county = node.ourcounty
+    var description = node._rawPropertyDescrition
+    var contacts = node.propertyContacts
   }
   return (
     <Layout>
       <div>
+        <BackToSearch></BackToSearch>
         <h1>{node.mlsid}</h1>
         <Carousel autoPlay interval="5000" transitionTime="1000">
           {images.map((image, index) => (
@@ -78,11 +84,101 @@ const Property = ({ data }) => {
         </div>
         <div>
           <strong>Description:</strong>
+          {description && (
+            <BlockContent blocks={description} serializers={Serializers} />
+          )}
+          {feedDescription && feedDescription}
         </div>
         <div>
           <strong>MLSID:</strong>
           {node.mlsid}
         </div>
+
+        {node._rawPropertyLocation && (
+          <div>
+            <strong>Location:</strong>
+            <BlockContent
+              blocks={node._rawPropertyLocation}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+
+        {node._rawPropertyLand && (
+          <div>
+            <strong>Land:</strong>
+            <BlockContent
+              blocks={node._rawPropertyLand}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+
+        {node._rawPropertyWater && (
+          <div>
+            <strong>Water:</strong>
+            <BlockContent
+              blocks={node._rawPropertyWater}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+
+        {node._rawPropertyWildlife && (
+          <div>
+            <strong>Wildlife:</strong>
+            <BlockContent
+              blocks={node._rawPropertyWildlife}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+        {node.region && (
+          <div>
+            <strong>Contacts:</strong>
+            {contacts.map((contact, index) => (
+              <div>
+                <div>{contact.teamEmail}</div>
+                <div>{contact.teamFirstName}</div>
+                <div>{contact.teamLastName}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {node.contacts && (
+          <div>
+            <strong>Contacts:</strong>
+            {contacts.map((contact, index) => (
+              <div>
+                <div>{contact.teamEmail}</div>
+                <div>{contact.teamFirstName}</div>
+                <div>{contact.teamLastName}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {node.propertyTopographicMap && (
+          <div>
+            <strong>Topographic Map:</strong>
+            <div
+              key={`map`}
+              id="___map"
+              dangerouslySetInnerHTML={{ __html: node.propertyTopographicMap }}
+            />
+          </div>
+        )}
+        {node.propertyInteractiveLocationMap && (
+          <div>
+            <strong>Interactive Location Map:</strong>
+            <div
+              key={`map`}
+              id="___map"
+              dangerouslySetInnerHTML={{
+                __html: node.propertyInteractiveLocationMap,
+              }}
+            />
+          </div>
+        )}
       </div>
     </Layout>
   )

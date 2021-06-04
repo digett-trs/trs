@@ -38,16 +38,10 @@ export const ourPropertyFullFragment = graphql`
         gatsbyImageData
       }
     }
-    propertyImprovements {
-      _rawChildren
-    }
+    _rawPropertyImprovements(resolveReferences: { maxDepth: 10 })
     propertyInteractiveLocationMap
-    propertyLand {
-      _rawChildren(resolveReferences: { maxDepth: 10 })
-    }
-    propertyLocation {
-      _rawChildren
-    }
+    _rawPropertyLand(resolveReferences: { maxDepth: 10 })
+    _rawPropertyLocation(resolveReferences: { maxDepth: 10 })
     propertySummary
     propertyTopographicMap {
       asset {
@@ -57,12 +51,8 @@ export const ourPropertyFullFragment = graphql`
     propertyType {
       propertyTypeName
     }
-    propertyWater {
-      _rawChildren(resolveReferences: { maxDepth: 10 })
-    }
-    propertyWildlife {
-      _rawChildren(resolveReferences: { maxDepth: 10 })
-    }
+    _rawPropertyWater(resolveReferences: { maxDepth: 10 })
+    _rawPropertyWildlife(resolveReferences: { maxDepth: 10 })
     region {
       regionName
     }
