@@ -85,6 +85,7 @@ class AdditionalProperties extends React.Component {
             <div
               sx={{
                 width: ["100%", "100%", "200px"],
+                zIndex: "0",
               }}
             >
               <h3>Property Search</h3>
@@ -347,7 +348,26 @@ class Range extends Component {
           <div>{currentValues.max}</div>
         </div>
       </div>
-    ) : null
+    ) : (
+      <div
+        sx={{
+          pointerEvents: "none",
+          opacity: "0.5",
+        }}
+      >
+        <Rheostat
+          min={min}
+          max={max}
+          values={[currentRefinement.min, currentRefinement.max]}
+          onChange={this.onChange}
+          onValuesUpdated={this.onValuesUpdated}
+        />
+        <div className="rheostat-values">
+          <div>{currentValues.min}</div>
+          <div>{currentValues.max}</div>
+        </div>
+      </div>
+    )
   }
 }
 

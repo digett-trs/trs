@@ -106,6 +106,20 @@ module.exports = {
         schemaType: postType,
       },
     },
+    {
+      resolve: `gatsby-plugin-modal-routing-3`,
+      options: {
+        // A selector to set react-modal's app root to, default is `#___gatsby`
+        // See http://reactcommunity.org/react-modal/accessibility/#app-element
+        appElement: "#___gatsby",
+
+        // Object of props that will be passed to the react-modal container
+        // See http://reactcommunity.org/react-modal/#usage
+        modalProps: {
+          closeTimeoutMS: 500,
+        },
+      },
+    },
     // require.resolve(`./digett-source-kerrville`),
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

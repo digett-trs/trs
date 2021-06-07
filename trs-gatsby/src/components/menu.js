@@ -29,7 +29,7 @@ const Menu = open => {
             display: "flex",
             flexDirection: ["column", "row", "row"],
             position: ["fixed", "relative", "relative"],
-            zIndex: "1000",
+            zIndex: "0",
             transition: "transform 0.3s ease-in-out",
             transform: [
               open.open ? "translateX(0%)" : "translateX(100%)",

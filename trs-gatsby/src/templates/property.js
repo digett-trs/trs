@@ -8,7 +8,9 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
 import Img from "gatsby-image"
-import BackToSearch from "../components/backToSearch"
+// import BackToSearch from "../components/backToSearch"
+import { ModalRoutingContext } from "gatsby-plugin-modal-routing"
+import ConditionalLayout from "../components/ConditionalLayout"
 const ReturnImage = ({ image }) => {
   if (image.asset) {
     return (
@@ -46,7 +48,6 @@ const ReturnCounty = ({ county }) => {
 const Property = ({ data }) => {
   // const node = data.property
   // const images = node.childrenFile
-  console.log(data)
   if (data.property) {
     var node = data.property
     var images = node.childrenFile
@@ -61,9 +62,8 @@ const Property = ({ data }) => {
     var contacts = node.propertyContacts
   }
   return (
-    <Layout>
+    <ConditionalLayout>
       <div>
-        <BackToSearch></BackToSearch>
         <h1>{node.mlsid}</h1>
         <Carousel autoPlay interval="5000" transitionTime="1000">
           {images.map((image, index) => (
@@ -93,7 +93,6 @@ const Property = ({ data }) => {
           <strong>MLSID:</strong>
           {node.mlsid}
         </div>
-
         {node._rawPropertyLocation && (
           <div>
             <strong>Location:</strong>
@@ -103,7 +102,6 @@ const Property = ({ data }) => {
             />
           </div>
         )}
-
         {node._rawPropertyLand && (
           <div>
             <strong>Land:</strong>
@@ -113,7 +111,6 @@ const Property = ({ data }) => {
             />
           </div>
         )}
-
         {node._rawPropertyWater && (
           <div>
             <strong>Water:</strong>
@@ -123,7 +120,6 @@ const Property = ({ data }) => {
             />
           </div>
         )}
-
         {node._rawPropertyWildlife && (
           <div>
             <strong>Wildlife:</strong>
@@ -163,7 +159,9 @@ const Property = ({ data }) => {
             <div
               key={`map`}
               id="___map"
-              dangerouslySetInnerHTML={{ __html: node.propertyTopographicMap }}
+              dangerouslySetInnerHTML={{
+                __html: node.propertyTopographicMap,
+              }}
             />
           </div>
         )}
@@ -180,7 +178,7 @@ const Property = ({ data }) => {
           </div>
         )}
       </div>
-    </Layout>
+    </ConditionalLayout>
   )
 }
 export default Property

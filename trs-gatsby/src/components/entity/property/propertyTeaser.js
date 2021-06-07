@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
-import { Link } from "gatsby"
+// import { Link } from "gatsby"
+import { Link } from "gatsby-plugin-modal-routing-3"
 import Img from "gatsby-image"
 import { GatsbyImage } from "gatsby-plugin-image"
 import Favorite from "../property/favorite"
@@ -9,9 +10,17 @@ import { render } from "react-dom"
 const SlugPath = ({ slug }) => {
   if (slug) {
     if (slug.current) {
-      return <Link to={"/property/" + slug.current}>View Ranch Details</Link>
+      return (
+        <Link asModal to={"/property/" + slug.current}>
+          View Ranch Details
+        </Link>
+      )
     } else {
-      return <Link to={"/property/" + slug}>View Ranch Details</Link>
+      return (
+        <Link asModal to={"/property/" + slug}>
+          View Ranch Details
+        </Link>
+      )
     }
   }
   return ""
