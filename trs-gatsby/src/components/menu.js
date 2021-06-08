@@ -18,22 +18,22 @@ const Menu = open => {
       render={data => (
         <div
           sx={{
-            padding: ["20px 20px", "20px 0px", "20px 0px"],
+            padding: ["20px 20px", "20px 20px", "20px 0px"],
             margin: "0 auto",
             boxSizing: "content-box",
-            width: ["180px", "100%", "100%"],
+            width: ["180px", "180px", "100%"],
             height: "100%",
             right: "0px",
             top: "0px",
             backgroundColor: ["rgba(255,255,255,0.9)", "none", "none"],
             display: "flex",
-            flexDirection: ["column", "row", "row"],
-            position: ["fixed", "relative", "relative"],
-            zIndex: "0",
+            flexDirection: ["column", "column", "row"],
+            position: ["fixed", "fixed", "relative"],
+            zIndex: "999",
             transition: "transform 0.3s ease-in-out",
             transform: [
               open.open ? "translateX(0%)" : "translateX(100%)",
-              "none",
+              open.open ? "translateX(0%)" : "translateX(100%)",
               "none",
             ],
           }}
@@ -42,7 +42,7 @@ const Menu = open => {
             <div
               key={index}
               sx={{
-                width: ["100%", "calc(100% / 7)", "calc(100% / 7)"],
+                width: ["100%", "100%", "calc(100% / 7)"],
                 position: "relative",
                 marginBottom: "10px",
                 "&:hover > div": {
@@ -65,14 +65,14 @@ const Menu = open => {
               {menuItem.children.submenu && (
                 <div
                   sx={{
-                    visibility: ["visible", "hidden", "hidden"],
-                    opacity: ["1", "0", "0"],
-                    position: ["relative", "absolute", "absolute"],
+                    visibility: ["visible", "visible", "hidden"],
+                    opacity: ["1", "1", "0"],
+                    position: ["relative", "relative", "absolute"],
                     transition: "all 0.5s ease",
-                    paddingTop: ["0px", "1rem", "1rem"],
+                    paddingTop: ["0px", "0px", "1rem"],
                     left: 0,
-                    display: ["block", "none", "none"],
-                    minWidth: ["auto", "300px", "300px"],
+                    display: ["block", "block", "none"],
+                    minWidth: ["auto", "auto", "300px"],
                   }}
                 >
                   {menuItem.children.submenu.map((menuSubItem, index) => (
@@ -81,7 +81,7 @@ const Menu = open => {
                         color: "black",
                         textDecoration: "none",
                         display: "block",
-                        padding: ["0px 0px", "10px 0px", "10px 0px"],
+                        padding: ["0px 0px", "0px 0px", "10px 0px"],
                         backgroundColor: "white",
                         fontSize: "16px",
                         textWrap: "wrap",

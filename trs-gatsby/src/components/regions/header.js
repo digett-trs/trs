@@ -40,9 +40,10 @@ class Header extends React.Component {
             <div
               sx={{
                 maxWidth: ["400px", "800px", "1000px"],
-                padding: ["15px 5%", "15px 10%", "15px 10%"],
+                padding: ["15px 5%", "15px 5%", "15px 10%"],
                 margin: "0 auto",
-                display: ["flex", "null", "null"],
+                display: ["flex", "flex", "null"],
+                alignItems: "center",
                 justifyContent: "space-between",
               }}
             >

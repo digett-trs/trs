@@ -79,7 +79,7 @@ class AdditionalProperties extends React.Component {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              flexDirection: ["column", "row", "row"],
+              flexDirection: ["column", "column", "row"],
             }}
           >
             <div
@@ -92,7 +92,7 @@ class AdditionalProperties extends React.Component {
               <div
                 sx={{
                   border: "thin solid blue",
-                  display: ["inline-block", "none", "none"],
+                  display: ["inline-block", "inline-block", "none"],
                   padding: "5px 10px",
                   marginBottom: "20px",
                 }}
@@ -107,14 +107,14 @@ class AdditionalProperties extends React.Component {
                   width: "100%",
                   height: "100%",
                   zIndex: "10002",
-                  position: ["fixed", "relative", "relative"],
+                  position: ["fixed", "fixed", "relative"],
                   top: "0px",
                   left: "0px",
                   backgroundColor: "white",
                   animation: "0.3s ease-out 0s 1 normal none",
                   display: [
                     this.state.filtersOpen ? "block" : "none",
-                    "block",
+                    this.state.filtersOpen ? "block" : "none",
                     "block",
                   ],
                 }}
@@ -127,7 +127,7 @@ class AdditionalProperties extends React.Component {
                   <div
                     sx={{
                       border: "thin solid blue",
-                      display: ["inline-block", "none", "none"],
+                      display: ["inline-block", "inline-block", "none"],
                       padding: "5px 10px",
                       marginBottom: "20px",
                     }}

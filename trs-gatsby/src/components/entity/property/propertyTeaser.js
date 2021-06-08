@@ -30,16 +30,18 @@ const PropertyTeaser = ({ property }) => {
     <div
       sx={{
         display: "flex",
-        flexDirection: ["column", "row", "row"],
+        flexDirection: ["column", "column", "row"],
         justifyContent: "space-between",
         borderBottom: "thin solid gray",
         paddingBottom: 4,
         marginBottom: 4,
+        zIndex: "1",
+        position: "relative",
       }}
     >
       <div
         sx={{
-          width: ["100%", "45%", "40%"],
+          width: ["100%", "100%", "40%"],
         }}
       >
         {property.sanityimage && (
@@ -68,7 +70,7 @@ const PropertyTeaser = ({ property }) => {
       </div>
       <div
         sx={{
-          width: ["calc(100%)", "calc(55% - 40px)", "calc(60% - 40px)"],
+          width: ["calc(100%)", "calc(100%)", "calc(60% - 40px)"],
         }}
       >
         <h1>{property.address}</h1>
