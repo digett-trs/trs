@@ -11,13 +11,25 @@ const SlugPath = ({ slug }) => {
   if (slug) {
     if (slug.current) {
       return (
-        <Link asModal to={"/property/" + slug.current}>
+        <Link
+          state={{
+            noScroll: true,
+          }}
+          asModal
+          to={"/property/" + slug.current}
+        >
           View Ranch Details
         </Link>
       )
     } else {
       return (
-        <Link asModal to={"/property/" + slug}>
+        <Link
+          state={{
+            noScroll: true,
+          }}
+          asModal
+          to={"/property/" + slug}
+        >
           View Ranch Details
         </Link>
       )

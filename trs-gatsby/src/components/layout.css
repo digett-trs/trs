@@ -6,3 +6,10 @@ img {
   max-width: 100%;
   height: auto;
 }
+.ReactModalPortal {
+  position: relative;
+  z-index: 999;
+}
+.ReactModal__Body--open {
+  overflow-y: hidden;
+}
