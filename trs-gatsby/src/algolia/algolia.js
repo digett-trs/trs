@@ -9,6 +9,9 @@ const postQuery = `{
       description: propertyDescription
       price: price
       updated: _updatedAt
+      city: city
+      state: state
+      zip: zip
       slug: mlsid
       image: childFile {
         childImageSharp {

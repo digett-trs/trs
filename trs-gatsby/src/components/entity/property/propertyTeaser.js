@@ -87,8 +87,22 @@ const PropertyTeaser = ({ property }) => {
         }}
       >
         <h1>{property.address}</h1>
-        <div>{property.strapline && property.strapline}</div>
-        <Favorite property={property}>Add to Favorites</Favorite>
+        {property.strapline && <div>{property.strapline}</div>}
+        {property.zip && (
+          <div>
+            <span>{property.city}</span>
+            <span> {property.state}, </span>
+            <span>{property.zip}</span>
+          </div>
+        )}
+        <Favorite
+          sx={{
+            display: "none",
+          }}
+          property={property}
+        >
+          Add to Favorites
+        </Favorite>
         <div>
           <strong>County:</strong>
           {property.sanitycounty && property.sanitycounty.countyName}
@@ -96,11 +110,18 @@ const PropertyTeaser = ({ property }) => {
         </div>
         <div>
           <strong>Price:</strong>
-          {property.price}
+          {property.price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2,
+          })}
         </div>
         <div>
           <strong>Acres:</strong>
-          {property.acreage}
+          {property.acreage
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+          +/-
         </div>
         <div>
           <strong>Description:</strong>
