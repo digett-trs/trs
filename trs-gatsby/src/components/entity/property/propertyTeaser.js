@@ -38,6 +38,7 @@ const SlugPath = ({ slug }) => {
   return ""
 }
 const PropertyTeaser = ({ property }) => {
+  console.log(property)
   return (
     <div
       sx={{
@@ -86,6 +87,7 @@ const PropertyTeaser = ({ property }) => {
         }}
       >
         <h1>{property.address}</h1>
+        <div>{property.strapline && property.strapline}</div>
         <Favorite property={property}>Add to Favorites</Favorite>
         <div>
           <strong>County:</strong>

@@ -8,9 +8,10 @@ export const propertyTeaserFragment = graphql`
     field_county
     field_l_remarks
     field_price
+    strapline
     childrenFile {
       childImageSharp {
-        fluid(maxWidth: 600, maxHeight:400) {
+        fluid(maxWidth: 600, maxHeight: 400) {
           ...GatsbyImageSharpFluid
         }
       }

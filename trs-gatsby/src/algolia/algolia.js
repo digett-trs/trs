@@ -30,6 +30,7 @@ const postQuery = `{
       county: ourcounty
       price: price
       acreage: acreage
+      strapline: strapline
       description: propertySummary
       updated: _updatedAt
       slug: slug{

@@ -96,6 +96,11 @@ export default {
       of: [{ type: "block" }],
     },
     {
+      title: "Strapline",
+      name: "strapline",
+      type: "string",
+    },
+    {
       title: "Property Location",
       name: "propertyLocation",
       type: "array",
