@@ -128,6 +128,9 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
     if (node.price) {
       node.price = parseInt(node.price)
     }
+    if (node.pricePerAcre) {
+      node.pricePerAcre = parseInt(node.pricePerAcre)
+    }
     if (node._updatedAt) {
       node._updatedAt = toTimestamp(node._updatedAt)
     }

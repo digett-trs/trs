@@ -110,26 +110,37 @@ const PropertyTeaser = ({ property }) => {
         </div>
         <div>
           <strong>Price:</strong>
-          {property.price.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 2,
-          })}
+          <span>
+            {property.price.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
+          </span>
+          {property.pricePerAcre && (
+            <span>
+              <span> or </span>
+              <span>
+                {property.pricePerAcre.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                })}
+              </span>
+              <span> per acre </span>
+            </span>
+          )}
         </div>
         <div>
           <strong>Acres:</strong>
-          {property.acreage
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-          +/-
+          {property.acreage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+            "+/-"}
         </div>
         <div>
           <strong>Description:</strong>
           {property.description}
-        </div>
-        <div>
-          <strong>MLSID:</strong>
-          {property.mlsid}
         </div>
       </div>
     </div>

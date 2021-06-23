@@ -12,6 +12,7 @@ export const propertyTeaserFragment = graphql`
     city
     state
     zip
+    pricePerAcre
     childrenFile {
       childImageSharp {
         fluid(maxWidth: 600, maxHeight: 400) {

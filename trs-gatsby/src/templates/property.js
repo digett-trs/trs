@@ -53,7 +53,6 @@ const Property = ({ data }) => {
     var images = node.childrenFile
     var county = node.county
     var feedDescription = node.propertyDescription
-    console.log(feedDescription)
   } else {
     var node = data.ourproperty
     var images = node.propertyImages
@@ -61,6 +60,7 @@ const Property = ({ data }) => {
     var description = node._rawPropertyDescrition
     var contacts = node.propertyContacts
   }
+  console.log(node)
   return (
     <ConditionalLayout>
       <div>
@@ -76,12 +76,24 @@ const Property = ({ data }) => {
         </div>
         <div>
           <strong>Price:</strong>
-          {node.price}
+          {node.price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}
         </div>
         <div>
           <strong>Acres:</strong>
-          {node.acreage}
+          {node.acreage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+            "+/-"}
         </div>
+        {node.propertySummary && (
+          <div>
+            <strong>Summary:</strong>
+            <div>{node.propertySummary}</div>
+          </div>
+        )}
         <div>
           <strong>Description:</strong>
           {description && (
@@ -107,6 +119,15 @@ const Property = ({ data }) => {
             <strong>Land:</strong>
             <BlockContent
               blocks={node._rawPropertyLand}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+        {node._rawPropertyImprovements && (
+          <div>
+            <strong>Improvements:</strong>
+            <BlockContent
+              blocks={node._rawPropertyImprovements}
               serializers={Serializers}
             />
           </div>
