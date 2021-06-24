@@ -8,7 +8,8 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
 import Img from "gatsby-image"
-// import BackToSearch from "../components/backToSearch"
+import LiteYouTubeEmbed from "react-lite-youtube-embed"
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 import { ModalRoutingContext } from "gatsby-plugin-modal-routing"
 import ConditionalLayout from "../components/ConditionalLayout"
 const ReturnImage = ({ image }) => {
@@ -48,6 +49,11 @@ const ReturnCounty = ({ county }) => {
 const Property = ({ data }) => {
   // const node = data.property
   // const images = node.childrenFile
+  function youtube_parser(url) {
+    var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/
+    var match = url.match(regExp)
+    return match && match[1].length == 11 ? match[1] : false
+  }
   if (data.property) {
     var node = data.property
     var images = node.childrenFile
@@ -59,8 +65,11 @@ const Property = ({ data }) => {
     var county = node.ourcounty
     var description = node._rawPropertyDescrition
     var contacts = node.propertyContacts
+    if (node.youtubeUrl) {
+      var videoId = youtube_parser(node.youtubeUrl)
+    }
+    console.log(videoId)
   }
-  console.log(node)
   return (
     <ConditionalLayout>
       <div>
@@ -190,6 +199,11 @@ const Property = ({ data }) => {
                 __html: node.propertyTopographicMap,
               }}
             />
+          </div>
+        )}
+        {videoId && (
+          <div>
+            <LiteYouTubeEmbed id={videoId} />
           </div>
         )}
         {node.propertyInteractiveLocationMap && (

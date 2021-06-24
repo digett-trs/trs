@@ -37,6 +37,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-instantsearch-dom": "^6.11.0",
+    "react-lite-youtube-embed": "^2.0.3",
     "react-multi-select": "^0.1.0",
     "react-responsive-carousel": "^3.2.18",
     "react-router": "^5.2.0",
