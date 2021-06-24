@@ -121,7 +121,7 @@ class AdditionalProperties extends React.Component {
               >
                 <div
                   sx={{
-                    padding: "20px",
+                    padding: "0px",
                   }}
                 >
                   <div
@@ -179,6 +179,14 @@ class AdditionalProperties extends React.Component {
                   <CustomRefinementList attribute="county" />
                   <h3>Acreage Range</h3>
                   <ConnectedRange attribute="acreage" />
+                  <h3>Status</h3>
+                  <RefinementList
+                    sx={{
+                      textTransform: "capitalize",
+                    }}
+                    attribute="status"
+                  />
+                  <ClearRefinements />
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ const postQuery = `{
       zip: zip
       slug: mlsid
       pricePerAcre: pricePerAcre
+      status: status
       image: childFile {
         childImageSharp {
           gatsbyImageData(
@@ -37,6 +38,7 @@ const postQuery = `{
       strapline: strapline
       description: propertySummary
       updated: _updatedAt
+      status: status
       slug: slug{
         current
       }
