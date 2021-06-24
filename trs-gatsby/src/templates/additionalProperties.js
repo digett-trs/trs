@@ -22,11 +22,13 @@ import {
   Configure,
   connectHits,
   connectNumericMenu,
+  connectStats,
   connectRefinementList,
   connectRange,
   MenuSelect,
   RefinementList,
   SortBy,
+  Stats,
 } from "react-instantsearch-dom"
 
 const searchClient = algoliasearch(
@@ -66,6 +68,8 @@ class AdditionalProperties extends React.Component {
   }
 
   render() {
+    const Stats = ({ nbHits }) => <p>{nbHits} results</p>
+    const CustomStats = connectStats(Stats)
     return (
       <Layout>
         <InstantSearch
@@ -137,6 +141,7 @@ class AdditionalProperties extends React.Component {
                   >
                     Done
                   </div>
+                  <CustomStats />
                   <SearchBox
                     searchAsYouType={false}
                     translations={{
