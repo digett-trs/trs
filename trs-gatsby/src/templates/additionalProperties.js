@@ -242,8 +242,12 @@ class Consumer extends React.Component {
   render() {
     const { selected } = this.state
     const options = []
+    console.log(this.props.items)
     this.props.items.map(item => {
-      options.push({ label: item.label, value: item.label })
+      options.push({
+        label: item.label + " (" + item.count + ")",
+        value: item.label,
+      })
     })
 
     return (
