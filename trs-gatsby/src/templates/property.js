@@ -74,20 +74,26 @@ const Property = ({ data }) => {
           <strong>County:</strong>
           {county}
         </div>
-        <div>
-          <strong>Price:</strong>
-          {node.price.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          })}
-        </div>
-        <div>
-          <strong>Acres:</strong>
-          {node.acreage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-            "+/-"}
-        </div>
+
+        {node.price && (
+          <div>
+            <strong>Price:</strong>
+            {node.price.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            })}
+          </div>
+        )}
+        {node.acreage && (
+          <div>
+            <strong>Acres:</strong>
+            {node.acreage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+              "+/-"}
+          </div>
+        )}
+
         {node.propertySummary && (
           <div>
             <strong>Summary:</strong>
