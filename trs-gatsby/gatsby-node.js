@@ -86,15 +86,15 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.slug.current,
         },
       })
-    }
-
-    if (node.slug.current == "properties") {
+    } else if (node.slug.current == "properties") {
       createPage({
         path: `/properties`,
         component: additionalPropertiesTemplate,
+        context: {
+          slug: node.slug.current,
+        },
       })
-    }
-    if (node.slug.current == "texas-ranch-brokerage-team") {
+    } else if (node.slug.current == "texas-ranch-brokerage-team") {
       createPage({
         path: `/texas-ranch-brokerage-team`,
         component: ourTeamTemplate,

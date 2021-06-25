@@ -68,6 +68,7 @@ class AdditionalProperties extends React.Component {
   }
 
   render() {
+    console.log("test")
     const Stats = ({ nbHits }) => <p>{nbHits} results</p>
     const CustomStats = connectStats(Stats)
     return (
