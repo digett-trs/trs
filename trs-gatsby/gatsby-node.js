@@ -76,6 +76,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const additionalPropertiesTemplate = path.resolve(
     "src/templates/additionalProperties.js"
   )
+  const ourTeamTemplate = path.resolve("src/templates/ourTeam.js")
   pages.data.page.nodes.forEach(node => {
     if (node.slug.current == "home") {
       createPage({
@@ -91,6 +92,15 @@ exports.createPages = async ({ graphql, actions }) => {
       createPage({
         path: `/properties`,
         component: additionalPropertiesTemplate,
+      })
+    }
+    if (node.slug.current == "texas-ranch-brokerage-team") {
+      createPage({
+        path: `/texas-ranch-brokerage-team`,
+        component: ourTeamTemplate,
+        context: {
+          slug: node.slug.current,
+        },
       })
     } else {
       createPage({
