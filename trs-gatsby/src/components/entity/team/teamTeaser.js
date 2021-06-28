@@ -5,11 +5,6 @@ import { GatsbyImage } from "gatsby-plugin-image"
 
 const TeamTeaser = ({ team }) => {
   console.log(team)
-  const teamPath =
-    "/our-team/" +
-    team.teamFirstName.toLowerCase() +
-    "-" +
-    team.teamLastName.toLowerCase()
   return (
     <div
       sx={{
@@ -48,7 +43,7 @@ const TeamTeaser = ({ team }) => {
         sx={{
           display: "block",
         }}
-        to={teamPath}
+        to={"/our-team/" + team.slug.current}
       >
         More about {team.teamFirstName}
       </Link>

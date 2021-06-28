@@ -4,6 +4,11 @@ export default {
   type: "document",
   fields: [
     {
+      name: "slug",
+      type: "slug",
+      title: "Slug",
+    },
+    {
       title: "Team First Name",
       name: "teamFirstName",
       type: "string",

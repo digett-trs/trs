@@ -25,6 +25,13 @@ exports.createPages = async ({ graphql, actions }) => {
           mlsid
         }
       }
+      team: allSanityTeam {
+        nodes {
+          slug {
+            current
+          }
+        }
+      }
     }
   `)
 
@@ -77,6 +84,8 @@ exports.createPages = async ({ graphql, actions }) => {
     "src/templates/additionalProperties.js"
   )
   const ourTeamTemplate = path.resolve("src/templates/ourTeam.js")
+  const contactTemplate = path.resolve("src/templates/contact.js")
+
   pages.data.page.nodes.forEach(node => {
     if (node.slug.current == "home") {
       createPage({
@@ -102,6 +111,14 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.slug.current,
         },
       })
+    } else if (node.slug.current == "contact-us") {
+      createPage({
+        path: `/contact-us`,
+        component: contactTemplate,
+        context: {
+          slug: node.slug.current,
+        },
+      })
     } else {
       createPage({
         path: `/${node.slug.current}`,
@@ -119,6 +136,17 @@ exports.createPages = async ({ graphql, actions }) => {
   //   path: `/additionalproperties2`,
   //   component: additionalPropertiesTemplate,
   // })
+
+  const teamTemplate = path.resolve("src/templates/team.js")
+  pages.data.team.nodes.forEach(node => {
+    createPage({
+      path: `/our-team/` + node.slug.current,
+      component: teamTemplate,
+      context: {
+        slug: node.slug.current,
+      },
+    })
+  })
 }
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {

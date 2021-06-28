@@ -40,6 +40,9 @@ export const ourTeamQuery = graphql`
     }
     ourteam: allSanityTeam {
       nodes {
+        slug {
+          current
+        }
         teamPosition
         teamFirstName
         teamLastName
