@@ -13,7 +13,9 @@ const MyForm = () => {
       status: { ok, msg },
     })
     if (ok) {
-      form.reset()
+      if (typeof window !== "undefined") {
+        window.location.href = "/contact-thank-you"
+      }
     }
   }
   const handleOnSubmit = e => {
