@@ -15,6 +15,7 @@ import county from "./county";
 import region from "./region";
 import propertyType from "./propertyType";
 import property from "./property";
+import blockcontent from "./blockcontent";
 import team from "./team";
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -36,5 +37,6 @@ export default createSchema({
     propertyType,
     property,
     team,
+    blockcontent,
   ]),
 });

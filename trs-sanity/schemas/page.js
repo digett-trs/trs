@@ -27,5 +27,16 @@ export default {
         },
       ],
     },
+    {
+      title: "Sidebar",
+      name: "sidebar",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "blockcontent" }],
+        },
+      ],
+    },
   ],
 };
