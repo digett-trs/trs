@@ -3,17 +3,19 @@ import { jsx } from "theme-ui"
 import React, { useState } from "react"
 import axios from "axios"
 const MyForm = () => {
-  var team = "none"
+  var team = ""
+  var lname = ""
   if (typeof window !== "undefined") {
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     var team = urlParams.get("team")
-    console.log(team)
+    var lname = urlParams.get("lname")
   }
   const [serverState, setServerState] = useState({
     submitting: false,
     status: null,
     team: team,
+    lname: lname,
   })
   const handleServerResponse = (ok, msg, form) => {
     setServerState({
@@ -42,10 +44,17 @@ const MyForm = () => {
         handleServerResponse(false, r.response.data.error, form)
       })
   }
-  console.log(serverState)
   return (
     <div>
       <div>
+        {serverState.team && (
+          <div>
+            You are sending this message to
+            <strong> {team + " " + lname} </strong>to inquire about
+            <strong> Our Services</strong>
+          </div>
+        )}
+
         <form
           sx={{
             display: "flex",

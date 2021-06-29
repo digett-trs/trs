@@ -32,7 +32,12 @@ const Team = ({ data }) => {
         sx={{
           display: "block",
         }}
-        to={"/contact-us?team=" + data.team.teamFirstName}
+        to={
+          "/contact-us?team=" +
+          data.team.teamFirstName +
+          "&lname=" +
+          data.team.teamLastName
+        }
       >
         Email {data.team.teamFirstName}
       </Link>

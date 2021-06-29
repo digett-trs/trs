@@ -35,7 +35,12 @@ const TeamTeaser = ({ team }) => {
         sx={{
           display: "block",
         }}
-        to={"/contact-us?team=" + team.teamFirstName}
+        to={
+          "/contact-us?team=" +
+          team.teamFirstName +
+          "&lname=" +
+          team.teamLastName
+        }
       >
         Email {team.teamFirstName}
       </Link>
