@@ -31,14 +31,14 @@ const TeamTeaser = ({ team }) => {
         {team.teamFirstName} {team.teamLastName}
       </h3>
       <div>{team.teamPosition}</div>
-      <a
+      <Link
         sx={{
           display: "block",
         }}
-        href={"mailto:" + team.teamEmail}
+        to={"/contact-us?team=" + team.teamFirstName}
       >
         Email {team.teamFirstName}
-      </a>
+      </Link>
       <Link
         sx={{
           display: "block",

@@ -3,9 +3,17 @@ import { jsx } from "theme-ui"
 import React, { useState } from "react"
 import axios from "axios"
 const MyForm = () => {
+  var team = "none"
+  if (typeof window !== "undefined") {
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    var team = urlParams.get("team")
+    console.log(team)
+  }
   const [serverState, setServerState] = useState({
     submitting: false,
     status: null,
+    team: team,
   })
   const handleServerResponse = (ok, msg, form) => {
     setServerState({
@@ -34,6 +42,7 @@ const MyForm = () => {
         handleServerResponse(false, r.response.data.error, form)
       })
   }
+  console.log(serverState)
   return (
     <div>
       <div>
@@ -125,6 +134,7 @@ const MyForm = () => {
           </div>
           <label>Comments</label>
           <textarea required name="comments" />
+          <input type="hidden" name="team" value={serverState.team} />
           <button type="submit">Send</button>
         </form>
       </div>

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui"
 import { graphql } from "gatsby"
+import { Link } from "gatsby"
 import BlockContent from "@sanity/block-content-to-react"
 import Serializers from "../components/serializers/serializers"
 import { GatsbyImage } from "gatsby-plugin-image"
@@ -27,9 +28,14 @@ const Team = ({ data }) => {
 
       <BlockContent blocks={data.team._rawTeamBio} serializers={Serializers} />
       <div>{"Connect With " + data.team.teamFirstName}</div>
-      <a href={"mailto:" + data.team.teamEmail}>
+      <Link
+        sx={{
+          display: "block",
+        }}
+        to={"/contact-us?team=" + data.team.teamFirstName}
+      >
         Email {data.team.teamFirstName}
-      </a>
+      </Link>
     </Layout>
   )
 }
