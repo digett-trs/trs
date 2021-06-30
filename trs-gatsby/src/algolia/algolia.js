@@ -27,7 +27,6 @@ const postQuery = `{
       }
     }
   }
-  
   ourproperties: allSanityProperty{
     nodes{
       objectID: mlsid
