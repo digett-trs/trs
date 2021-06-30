@@ -5,6 +5,14 @@ import { StaticQuery, graphql } from "gatsby"
 import { Link } from "gatsby"
 
 const Menu = open => {
+  function menuPath(sanityPath) {
+    console.log(sanityPath)
+    if (sanityPath == "home") {
+      return ""
+    } else {
+      return sanityPath
+    }
+  }
   return (
     <StaticQuery
       query={graphql`
@@ -58,7 +66,8 @@ const Menu = open => {
                   textDecoration: "none",
                   fontSize: ["24px", "18px", "18px"],
                 }}
-                to={"/" + menuItem.children.document.slug.current}
+                activeStyle={{ textDecoration: "underline" }}
+                to={"/" + menuPath(menuItem.children.document.slug.current)}
               >
                 {menuItem.children.title}
               </Link>
@@ -86,6 +95,7 @@ const Menu = open => {
                         fontSize: "16px",
                         textWrap: "wrap",
                       }}
+                      activeStyle={{ textDecoration: "underline" }}
                       to={"/" + menuSubItem.document.slug.current}
                     >
                       {menuSubItem.document.title}

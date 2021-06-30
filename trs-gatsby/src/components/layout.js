@@ -25,6 +25,10 @@ const Layout = ({ children }) => {
           padding: "0px 10%",
           margin: "0 auto",
           boxSizing: "content-box",
+          a: {
+            textDecoration: "none",
+            color: "text",
+          },
         }}
       >
         <main>{children}</main>

@@ -15,7 +15,11 @@ const Serializers = {
       } else {
         href = `/${mark.reference.slug.current}`
       }
-      return <Link to={href}>{children}</Link>
+      return (
+        <Link activeStyle={{ textDecoration: "underline" }} to={href}>
+          {children}
+        </Link>
+      )
     },
   },
 }
