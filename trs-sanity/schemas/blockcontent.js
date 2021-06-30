@@ -29,6 +29,7 @@ export default {
                     title: "Reference",
                     to: [
                       { type: "page" },
+                      { type: "team" },
                       // other types you may want to link to
                     ],
                   },

@@ -7,22 +7,58 @@ import Serializers from "../components/serializers/serializers"
 import Layout from "../components/layout"
 import TeamTeaser from "../components/entity/team/teamTeaser"
 const OurTeam = ({ data }) => {
-  console.log(data)
   const node = data.page
   return (
     <Layout>
-      <h1>{data.page.title}</h1>
-      <BlockContent blocks={data.page._rawBody} serializers={Serializers} />
       <div
         sx={{
-          display: "flex",
+          display: [
+            "block",
+            node.sidebar[0] ? "flex" : "block",
+            node.sidebar[0] ? "flex" : "block",
+          ],
           justifyContent: "space-between",
-          flexWrap: "wrap",
         }}
       >
-        {data.ourteam.nodes.map((team, index) => (
-          <TeamTeaser index={index} team={team} />
-        ))}
+        {node.sidebar[0] && (
+          <div
+            sx={{
+              width: [
+                "100%",
+                node.sidebar[0] ? "175px" : "100%",
+                node.sidebar[0] ? "175px" : "100%",
+              ],
+            }}
+          >
+            <BlockContent
+              blocks={node.sidebar[0]._rawBlockcontent}
+              serializers={Serializers}
+            />
+          </div>
+        )}
+        <div
+          sx={{
+            width: [
+              "100%",
+              node.sidebar[0] ? "calc(100% - 220px)" : "100%",
+              node.sidebar[0] ? "calc(100% - 220px)" : "100%",
+            ],
+          }}
+        >
+          <h1>{data.page.title}</h1>
+          <BlockContent blocks={data.page._rawBody} serializers={Serializers} />
+          <div
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+            }}
+          >
+            {data.ourteam.nodes.map((team, index) => (
+              <TeamTeaser index={index} team={team} />
+            ))}
+          </div>
+        </div>
       </div>
     </Layout>
   )
@@ -37,6 +73,10 @@ export const ourTeamQuery = graphql`
       }
       title
       _rawBody(resolveReferences: { maxDepth: 10 })
+      sidebar {
+        _rawBlockcontent(resolveReferences: { maxDepth: 10 })
+        blockName
+      }
     }
     ourteam: allSanityTeam {
       nodes {

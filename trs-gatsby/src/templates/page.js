@@ -5,7 +5,7 @@ import { graphql } from "gatsby"
 import BlockContent from "@sanity/block-content-to-react"
 import Serializers from "../components/serializers/serializers"
 import Layout from "../components/layout"
-import SideBar from "../components/sideBar"
+
 const Page = ({ data }) => {
   const node = data.page
   const images = node.image

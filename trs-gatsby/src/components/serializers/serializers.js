@@ -9,10 +9,12 @@ const Serializers = {
   },
   marks: {
     internalLink: ({ mark, children }) => {
-      console.log(mark)
-      const slug = mark.reference.slug.current
-      console.log(slug)
-      const href = `/${slug}`
+      var href = ""
+      if (mark.reference._type == "team") {
+        href = `/our-team/${mark.reference.slug.current}`
+      } else {
+        href = `/${mark.reference.slug.current}`
+      }
       return <Link to={href}>{children}</Link>
     },
   },
