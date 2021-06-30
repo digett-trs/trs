@@ -13,7 +13,6 @@ const postQuery = `{
       state: state
       zip: zip
       slug: mlsid
-      pricePerAcre: pricePerAcre
       status: status
       image: childFile {
         childImageSharp {
