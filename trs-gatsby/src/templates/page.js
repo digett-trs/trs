@@ -7,29 +7,27 @@ import Serializers from "../components/serializers/serializers"
 import Layout from "../components/layout"
 import SideBar from "../components/sideBar"
 const Page = ({ data }) => {
-  console.log(data)
   const node = data.page
   const images = node.image
-  console.log(node)
   return (
     <Layout>
       <div
         sx={{
           display: [
             "block",
-            node.sidebar ? "flex" : "block",
-            node.sidebar ? "flex" : "block",
+            node.sidebar[0] ? "flex" : "block",
+            node.sidebar[0] ? "flex" : "block",
           ],
           justifyContent: "space-between",
         }}
       >
-        {node.sidebar && (
+        {node.sidebar[0] && (
           <div
             sx={{
               width: [
                 "100%",
-                node.sidebar ? "175px" : "100%",
-                node.sidebar ? "175px" : "100%",
+                node.sidebar[0] ? "175px" : "100%",
+                node.sidebar[0] ? "175px" : "100%",
               ],
             }}
           >
@@ -43,8 +41,8 @@ const Page = ({ data }) => {
           sx={{
             width: [
               "100%",
-              node.sidebar ? "calc(100% - 220px)" : "100%",
-              node.sidebar ? "calc(100% - 220px)" : "100%",
+              node.sidebar[0] ? "calc(100% - 220px)" : "100%",
+              node.sidebar[0] ? "calc(100% - 220px)" : "100%",
             ],
           }}
         >
