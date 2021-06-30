@@ -5,12 +5,16 @@ const queries = require(`${__dirname}/src/algolia/algolia`)
 const postType = {
   id: 1,
   mlsid: "666",
-  field_acreage: "666",
-  field_county: "The County",
-  field_l_remarks: "Lorem Ipsum Remarks",
-  field_price: "666",
-  field_l_addressstreet: "666 Street",
-  field_images: [
+  acreage: "666",
+  county: "The County",
+  propertyDescription: "Lorem Ipsum Remarks",
+  price: "666",
+  pricePerAcre: "666 Street",
+  status: "for-sale",
+  zip: "666",
+  state: "AK",
+  propertyName: "The Name",
+  propertyImages: [
     "https://mls-api-trfs.pantheonsite.io/sites/default/files/99722-1599649396-44.jpg",
     "https://mls-api-trfs.pantheonsite.io/sites/default/files/78490-1597381396-17.jpg",
   ],
