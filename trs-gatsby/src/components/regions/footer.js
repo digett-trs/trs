@@ -14,7 +14,7 @@ const Footer = () => {
           boxSizing: "content-box",
         }}
       >
-        © , Built by
+        © {new Date().getFullYear()}, Built by
         {` `}
         <a href="https://digett.com">Digett</a>
         <button
