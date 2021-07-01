@@ -190,7 +190,7 @@ exports.onCreateNode = async ({
         obj = { created: Date.now() }
         // const data = await graphql(query)
         // obj.data = data
-        console.log("nocache object full run" + obj)
+        console.log("nocache object full run" + obj.lastChecked)
         try {
           const imageIds = await createImages(
             createNode,
@@ -209,6 +209,7 @@ exports.onCreateNode = async ({
         /* Reload after a day */
         // const data = await graphql(query)
         // obj.data = data
+
         try {
           const imageIds = await createImages(
             createNode,
@@ -223,9 +224,9 @@ exports.onCreateNode = async ({
         } catch (error) {
           console.log(error)
         }
-        console.log("cache-expired-full-run" + obj)
+        console.log("cache-expired-full-run" + obj.lastChecked)
       } else {
-        console.log("cache-not-expired" + obj)
+        console.log("cache-not-expired" + obj.lastChecked)
       }
       obj.lastChecked = Date.now()
       await cache.set(cacheKey, obj)
