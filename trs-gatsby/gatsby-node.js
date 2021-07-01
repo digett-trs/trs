@@ -175,48 +175,50 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
     if (node.acreage) {
       node.acreage = parseInt(node.acreage)
     }
-    // if (node.propertyImages) {
-    //   try {
-    //     const imageIds = await createImages(
-    //       createNode,
-    //       node,
-    //       actions,
-    //       createNodeId,
-    //       getCache
-    //     )
-    //     console.log(imageIds)
-    //     node.children = imageIds
-    //     console.log(node.mlsid)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
+    if (node.propertyImages) {
+      try {
+        if (node.mlsid == "1504526") {
+          const imageIds = await createImages(
+            createNode,
+            node,
+            actions,
+            createNodeId,
+            getCache
+          )
+          console.log(imageIds)
+          node.children = imageIds
+          console.log(node.mlsid)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 }
 
-// async function createImages(createNode, node, actions, createNodeId, getCache) {
-//   var imageIds = []
-//   await Promise.all(
-//     node.propertyImages.map(async image => {
-//       let fileNode
-//       try {
-//         fileNode = await createRemoteFileNode({
-//           url: image,
-//           parentNodeId: node.id,
-//           getCache,
-//           createNode,
-//           createNodeId,
-//         })
-//         if (fileNode) {
-//           imageIds.push(fileNode.id)
-//         }
-//       } catch (e) {
-//         // Ignore
-//       }
-//     })
-//   )
-//   return imageIds
-// }
+async function createImages(createNode, node, actions, createNodeId, getCache) {
+  var imageIds = []
+  await Promise.all(
+    node.propertyImages.map(async image => {
+      let fileNode
+      try {
+        fileNode = await createRemoteFileNode({
+          url: image,
+          parentNodeId: node.id,
+          getCache,
+          createNode,
+          createNodeId,
+        })
+        if (fileNode) {
+          imageIds.push(fileNode.id)
+        }
+      } catch (e) {
+        // Ignore
+      }
+    })
+  )
+  return imageIds
+}
 
 exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
   actions.createTypes([
