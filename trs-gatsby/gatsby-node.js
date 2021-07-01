@@ -189,21 +189,19 @@ exports.onCreateNode = async ({
         obj = { created: Date.now() }
         // const data = await graphql(query)
         // obj.data = data
-        console.log("1" + obj)
+        console.log("nocache" + obj)
         try {
-          if (node.mlsid == "1504526") {
-            console.log("thenode")
-            const imageIds = await createImages(
-              createNode,
-              node,
-              actions,
-              createNodeId,
-              cache
-            )
-            console.log(imageIds)
-            node.children = imageIds
-            console.log(node.mlsid)
-          }
+          console.log("thenode")
+          const imageIds = await createImages(
+            createNode,
+            node,
+            actions,
+            createNodeId,
+            cache
+          )
+          console.log(imageIds)
+          node.children = imageIds
+          console.log(node.mlsid)
         } catch (error) {
           console.log(error)
         }
@@ -211,11 +209,11 @@ exports.onCreateNode = async ({
         /* Reload after a day */
         // const data = await graphql(query)
         // obj.data = data
-        console.log("2" + obj)
+        console.log("cache" + obj)
       }
       obj.lastChecked = Date.now()
       await cache.set(cacheKey, obj)
-      console.log("3" + obj)
+      console.log("cache-check-done" + obj)
     }
   }
 }
