@@ -186,6 +186,12 @@ exports.onCreateNode = async ({
       const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
       const oneMinInMilliseconds = 180000
       let obj = await cache.get(cacheKey)
+      var twelve = new Date()
+      twelve.setHours(0, 0, 0, 0)
+      var two = new Date()
+      two.setHours(2, 0, 0, 0)
+      console.log("twelve " + twelve)
+      console.log("two " + two)
       if (!obj) {
         obj = { created: Date.now() }
         // const data = await graphql(query)
@@ -205,7 +211,7 @@ exports.onCreateNode = async ({
         } catch (error) {
           console.log(error)
         }
-      } else if (Date.now() > obj.lastChecked + oneMinInMilliseconds) {
+      } else if (Date.now() > twelve && Date.now() < two) {
         /* Reload after a day */
         // const data = await graphql(query)
         // obj.data = data
@@ -224,9 +230,11 @@ exports.onCreateNode = async ({
         } catch (error) {
           console.log(error)
         }
-        console.log("cache-expired-full-run" + obj.lastChecked)
+        console.log("between-12-and-2am-run" + obj.lastChecked)
       } else {
-        console.log("cache-not-expired" + obj.lastChecked)
+        console.log(
+          "cache-good-not-between-12-and-2am - no run" + obj.lastChecked
+        )
       }
       obj.lastChecked = Date.now()
       await cache.set(cacheKey, obj)
