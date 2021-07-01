@@ -184,14 +184,14 @@ exports.onCreateNode = async ({
     if (node.propertyImages) {
       const cacheKey = "some-key-name"
       const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
+      const oneMinInMilliseconds = 180000
       let obj = await cache.get(cacheKey)
       if (!obj) {
         obj = { created: Date.now() }
         // const data = await graphql(query)
         // obj.data = data
-        console.log("nocache" + obj)
+        console.log("nocache object full run" + obj)
         try {
-          console.log("thenode")
           const imageIds = await createImages(
             createNode,
             node,
@@ -205,15 +205,30 @@ exports.onCreateNode = async ({
         } catch (error) {
           console.log(error)
         }
-      } else if (Date.now() > obj.lastChecked + twentyFourHoursInMilliseconds) {
+      } else if (Date.now() > obj.lastChecked + oneMinInMilliseconds) {
         /* Reload after a day */
         // const data = await graphql(query)
         // obj.data = data
-        console.log("cache" + obj)
+        try {
+          const imageIds = await createImages(
+            createNode,
+            node,
+            actions,
+            createNodeId,
+            cache
+          )
+          console.log(imageIds)
+          node.children = imageIds
+          console.log(node.mlsid)
+        } catch (error) {
+          console.log(error)
+        }
+        console.log("cache-expired-full-run" + obj)
+      } else {
+        console.log("cache-not-expired" + obj)
       }
       obj.lastChecked = Date.now()
       await cache.set(cacheKey, obj)
-      console.log("cache-check-done" + obj)
     }
   }
 }
@@ -241,7 +256,6 @@ async function createImages(createNode, node, actions, createNodeId, cache) {
   )
   return imageIds
 }
-
 exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
   actions.createTypes([
     schema.buildObjectType({
