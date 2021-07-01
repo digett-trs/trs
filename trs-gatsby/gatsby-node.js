@@ -160,7 +160,13 @@ const toTimestamp = strDate => {
   const dt = Date.parse(strDate)
   return dt / 1000
 }
-exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
+exports.onCreateNode = async ({
+  node,
+  actions,
+  createNodeId,
+  getCache,
+  cache,
+}) => {
   const { createNode } = actions
   if (node.internal.type === `property`) {
     if (node.price) {
@@ -176,27 +182,45 @@ exports.onCreateNode = async ({ node, actions, createNodeId, getCache }) => {
       node.acreage = parseInt(node.acreage)
     }
     if (node.propertyImages) {
-      try {
-        if (node.mlsid == "1504526") {
-          const imageIds = await createImages(
-            createNode,
-            node,
-            actions,
-            createNodeId,
-            getCache
-          )
-          console.log(imageIds)
-          node.children = imageIds
-          console.log(node.mlsid)
+      const cacheKey = "some-key-name"
+      const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
+      let obj = await cache.get(cacheKey)
+      if (!obj) {
+        obj = { created: Date.now() }
+        // const data = await graphql(query)
+        // obj.data = data
+        console.log("1" + obj)
+        try {
+          if (node.mlsid == "1504526") {
+            console.log("thenode")
+            const imageIds = await createImages(
+              createNode,
+              node,
+              actions,
+              createNodeId,
+              cache
+            )
+            console.log(imageIds)
+            node.children = imageIds
+            console.log(node.mlsid)
+          }
+        } catch (error) {
+          console.log(error)
         }
-      } catch (error) {
-        console.log(error)
+      } else if (Date.now() > obj.lastChecked + twentyFourHoursInMilliseconds) {
+        /* Reload after a day */
+        // const data = await graphql(query)
+        // obj.data = data
+        console.log("2" + obj)
       }
+      obj.lastChecked = Date.now()
+      await cache.set(cacheKey, obj)
+      console.log("3" + obj)
     }
   }
 }
 
-async function createImages(createNode, node, actions, createNodeId, getCache) {
+async function createImages(createNode, node, actions, createNodeId, cache) {
   var imageIds = []
   await Promise.all(
     node.propertyImages.map(async image => {
@@ -205,7 +229,7 @@ async function createImages(createNode, node, actions, createNodeId, getCache) {
         fileNode = await createRemoteFileNode({
           url: image,
           parentNodeId: node.id,
-          getCache,
+          cache,
           createNode,
           createNodeId,
         })
