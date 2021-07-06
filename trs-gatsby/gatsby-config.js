@@ -94,12 +94,15 @@ module.exports = {
     //     // ** ALL OPTIONAL BELOW HERE: **
     //   },
     // },
-    // require.resolve(`./digett-source-idx`),
+    require.resolve(`./source-properties`),
+
     {
       resolve: "gatsby-source-apiserver",
       options: {
         url: "https://mls-api-trfs.pantheonsite.io/rest/mls",
         method: "get",
+        allowCache: true,
+        maxCacheDurationSeconds: 60 * 60 * 24,
         headers: {
           "Content-Type": "application/json",
         },

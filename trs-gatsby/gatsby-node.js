@@ -182,62 +182,20 @@ exports.onCreateNode = async ({
       node.acreage = parseInt(node.acreage)
     }
     if (node.propertyImages) {
-      const cacheKey = "some-key-name"
-      const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
-      const oneMinInMilliseconds = 180000
-      let obj = await cache.get(cacheKey)
-      var twelve = new Date()
-      twelve.setHours(0, 0, 0, 0)
-      var two = new Date()
-      two.setHours(2, 0, 0, 0)
-      console.log("twelve " + twelve)
-      console.log("two " + two)
-      if (!obj) {
-        obj = { created: Date.now() }
-        // const data = await graphql(query)
-        // obj.data = data
-        console.log("nocache object full run" + obj.lastChecked)
-        try {
-          const imageIds = await createImages(
-            createNode,
-            node,
-            actions,
-            createNodeId,
-            cache
-          )
-          console.log(imageIds)
-          node.children = imageIds
-          console.log(node.mlsid)
-        } catch (error) {
-          console.log(error)
-        }
-      } else if (Date.now() > twelve && Date.now() < two) {
-        /* Reload after a day */
-        // const data = await graphql(query)
-        // obj.data = data
-
-        try {
-          const imageIds = await createImages(
-            createNode,
-            node,
-            actions,
-            createNodeId,
-            cache
-          )
-          console.log(imageIds)
-          node.children = imageIds
-          console.log(node.mlsid)
-        } catch (error) {
-          console.log(error)
-        }
-        console.log("between-12-and-2am-run" + obj.lastChecked)
-      } else {
-        console.log(
-          "cache-good-not-between-12-and-2am - no run" + obj.lastChecked
+      try {
+        const imageIds = await createImages(
+          createNode,
+          node,
+          actions,
+          createNodeId,
+          cache
         )
+        console.log(imageIds)
+        node.children = imageIds
+        console.log(node.mlsid)
+      } catch (error) {
+        console.log(error)
       }
-      obj.lastChecked = Date.now()
-      await cache.set(cacheKey, obj)
     }
   }
 }

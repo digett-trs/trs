@@ -24,5 +24,10 @@ export default {
         hotspot: true, // <-- Defaults to false
       },
     },
+    {
+      title: "Rebuild Imports",
+      name: "imports",
+      type: "boolean",
+    },
   ],
 };
