@@ -2,6 +2,7 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 const queries = require(`${__dirname}/src/algolia/algolia`)
+
 const postType = {
   id: 1,
   mlsid: "666",
