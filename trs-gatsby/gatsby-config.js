@@ -106,7 +106,7 @@ module.exports = {
         url: "https://mls-api-trfs.pantheonsite.io/rest/mls",
         method: "get",
         allowCache: true,
-        maxCacheDurationSeconds: 60 * 60 * 24,
+        maxCacheDurationSeconds: 60 * 5,
         headers: {
           "Content-Type": "application/json",
         },
