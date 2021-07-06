@@ -95,7 +95,6 @@ module.exports = {
     //   },
     // },
     require.resolve(`./source-properties`),
-
     {
       resolve: "gatsby-source-apiserver",
       options: {
