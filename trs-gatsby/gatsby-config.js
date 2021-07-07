@@ -33,6 +33,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-remove-fingerprints`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

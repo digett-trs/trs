@@ -34,17 +34,6 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-
-  // const ourPropertyTemplate = path.resolve("src/templates/ourProperty.js")
-  // pages.data.ourproperty.nodes.forEach(node => {
-  //   createPage({
-  //     path: `/our-property/${node.slug.current}`,
-  //     component: ourPropertyTemplate,
-  //     context: {
-  //       id: node.id,
-  //     },
-  //   })
-  // })
   const propertyTemplate = path.resolve("src/templates/property.js")
   pages.data.property.nodes.forEach(node => {
     createPage({
@@ -64,21 +53,6 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
-  // const postsPerPage = 6
-  // const numPages = Math.ceil(pages.data.property.nodes.length / postsPerPage)
-  // const insightsTemplate = path.resolve("src/templates/properties.js")
-  // Array.from({ length: numPages }).forEach((_, i) => {
-  //   createPage({
-  //     path: i === 0 ? `/property` : `/property/${i + 1}`,
-  //     component: insightsTemplate,
-  //     context: {
-  //       limit: postsPerPage,
-  //       skip: i * postsPerPage,
-  //       numPages,
-  //       currentPage: i + 1,
-  //     },
-  //   })
-  // })
   const pageTemplate = path.resolve("src/templates/page.js")
   const additionalPropertiesTemplate = path.resolve(
     "src/templates/additionalProperties.js"
@@ -129,13 +103,6 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
-  // const additionalPropertiesTemplate = path.resolve(
-  //   "src/templates/additionalProperties.js"
-  // )
-  // createPage({
-  //   path: `/additionalproperties2`,
-  //   component: additionalPropertiesTemplate,
-  // })
 
   const teamTemplate = path.resolve("src/templates/team.js")
   pages.data.team.nodes.forEach(node => {
@@ -239,4 +206,11 @@ exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
       },
     }),
   ])
+}
+
+const ChildProcess = require("child_process")
+exports.onPostBuild = () => {
+  ChildProcess.execSync(
+    "ps aux | grep jest | grep -v grep | awk '{print $2}' | xargs kill"
+  )
 }

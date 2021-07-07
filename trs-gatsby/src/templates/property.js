@@ -2,15 +2,11 @@ import React from "react"
 import { graphql } from "gatsby"
 import BlockContent from "@sanity/block-content-to-react"
 import Serializers from "../components/serializers/serializers"
-import Layout from "../components/layout"
-import { Field, jsx } from "theme-ui"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
-import Img from "gatsby-image"
 import LiteYouTubeEmbed from "react-lite-youtube-embed"
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
-import { ModalRoutingContext } from "gatsby-plugin-modal-routing"
 import ConditionalLayout from "../components/ConditionalLayout"
 const ReturnImage = ({ image }) => {
   if (image.asset) {
