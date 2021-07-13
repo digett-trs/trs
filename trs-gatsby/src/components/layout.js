@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
       <div
         sx={{
           maxWidth: ["400px", "800px", "1000px"],
-          padding: "0px 10%",
+          padding: ["0px 5%", "0px 7%", "0px 10%"],
           margin: "0 auto",
           boxSizing: "content-box",
           a: {

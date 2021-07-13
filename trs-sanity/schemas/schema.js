@@ -7,6 +7,7 @@ import schemaTypes from "all:part:@sanity/base/schema-type";
 // We import object and document schemas
 import siteSettings from "./siteSettings";
 import page from "./page";
+import home from "./home";
 import menuItemSub from "./menuItemSub";
 import menuItemItem from "./menuItemItem";
 import menuItem from "./menuItem";
@@ -28,6 +29,7 @@ export default createSchema({
     /* Your types here! */
     siteSettings,
     page,
+    home,
     menuItemSub,
     menuItemItem,
     menuItem,

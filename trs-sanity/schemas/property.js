@@ -32,12 +32,9 @@ export default {
       type: "text",
     },
     {
-      title: "Property Featured Image",
-      name: "propertyFeaturedImage",
-      type: "image",
-      options: {
-        hotspot: true, // <-- Defaults to false
-      },
+      title: "Featured Text Overlay",
+      name: "featuredTextOverlay",
+      type: "string",
     },
     {
       title: "Property Type",

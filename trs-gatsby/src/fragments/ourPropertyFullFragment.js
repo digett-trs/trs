@@ -28,11 +28,6 @@ export const ourPropertyFullFragment = graphql`
       teamEmail
     }
     _rawPropertyDescrition(resolveReferences: { maxDepth: 10 })
-    propertyFeaturedImage {
-      asset {
-        gatsbyImageData
-      }
-    }
     propertyImages {
       asset {
         gatsbyImageData

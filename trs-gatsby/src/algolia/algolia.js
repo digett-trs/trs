@@ -41,16 +41,6 @@ const postQuery = `{
       slug: slug{
         current
       }
-      sanityimage: propertyFeaturedImage {
-        asset {
-          gatsbyImageData(
-            width: 600
-            placeholder: BLURRED
-            formats: [AUTO, WEBP, AVIF]
-            layout: CONSTRAINED
-          )
-        }
-      }
     }
   }
 }`

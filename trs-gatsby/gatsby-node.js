@@ -32,6 +32,11 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      home: allSanityHome {
+        nodes {
+          id
+        }
+      }
     }
   `)
   const propertyTemplate = path.resolve("src/templates/property.js")
@@ -54,22 +59,25 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
   const pageTemplate = path.resolve("src/templates/page.js")
+  const homeTemplate = path.resolve("src/templates/home.js")
   const additionalPropertiesTemplate = path.resolve(
     "src/templates/additionalProperties.js"
   )
   const ourTeamTemplate = path.resolve("src/templates/ourTeam.js")
   const contactTemplate = path.resolve("src/templates/contact.js")
 
+  pages.data.home.nodes.forEach(node => {
+    createPage({
+      path: `/`,
+      component: homeTemplate,
+      context: {
+        id: node.id,
+      },
+    })
+  })
+
   pages.data.page.nodes.forEach(node => {
-    if (node.slug.current == "home") {
-      createPage({
-        path: `/`,
-        component: pageTemplate,
-        context: {
-          slug: node.slug.current,
-        },
-      })
-    } else if (node.slug.current == "properties") {
+    if (node.slug.current == "properties") {
       createPage({
         path: `/properties`,
         component: additionalPropertiesTemplate,
