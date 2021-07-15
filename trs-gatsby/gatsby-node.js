@@ -126,10 +126,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
 exports.sourceNodes = ({ actions, getNodesByType }) => {
   const { touchNode } = actions
-  // touch nodes to ensure they aren't garbage collected
-  ;[...getNodesByType(`property`)].forEach(node =>
-    touchNode({ nodeId: node.id })
-  )
+    // touch nodes to ensure they aren't garbage collected
+    ;[...getNodesByType(`property`)].forEach(node =>
+      touchNode({ nodeId: node.id })
+    )
 }
 const toTimestamp = strDate => {
   const dt = Date.parse(strDate)
@@ -199,6 +199,18 @@ async function createImages(createNode, node, actions, createNodeId, cache) {
   return imageIds
 }
 exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+  type Property implements Node @dontInfer {
+    mlsid: String!
+    id: String!
+    acreage: String
+    county: String
+    propertyDescription: String
+    price: String
+  }
+`
+  createTypes(typeDefs)
   actions.createTypes([
     schema.buildObjectType({
       name: "SanityProperty",
@@ -215,3 +227,18 @@ exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
     }),
   ])
 }
+
+// exports.createSchemaCustomization = ({ actions }) => {
+//   const { createTypes } = actions
+//   const typeDefs = `
+//     type Property implements Node @dontInfer {
+//       mlsid: String!
+//       id: String!
+//       acreage: String
+//       county: String
+//       propertyDescription: String
+//       price: String
+//     }
+//   `
+//   createTypes(typeDefs)
+// }
