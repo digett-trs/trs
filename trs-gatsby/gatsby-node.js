@@ -204,10 +204,10 @@ exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
   type Property implements Node @dontInfer {
     mlsid: String!
     id: String!
-    acreage: String
+    acreage: Int
     county: String
     propertyDescription: String
-    price: String
+    price: Int
   }
 `
   createTypes(typeDefs)
