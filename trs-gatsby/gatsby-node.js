@@ -199,18 +199,7 @@ async function createImages(createNode, node, actions, createNodeId, cache) {
   return imageIds
 }
 exports.createSchemaCustomization = ({ actions, schema, getNode }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-  type Property implements Node @dontInfer {
-    mlsid: String!
-    id: String!
-    acreage: Int
-    county: String
-    propertyDescription: String
-    price: Int
-  }
-`
-  createTypes(typeDefs)
+
   actions.createTypes([
     schema.buildObjectType({
       name: "SanityProperty",
