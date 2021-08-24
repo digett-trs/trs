@@ -70,11 +70,17 @@ const Property = ({ data }) => {
     <ConditionalLayout>
       <div>
         <h1>{node.mlsid}</h1>
-        <Carousel autoPlay interval="5000" transitionTime="1000">
+        <Carousel
+          autoPlay
+          interval="5000"
+          transitionTime="1000"
+          showThumbs={false}
+        >
           {images.map((image, index) => (
             <ReturnImage image={image}></ReturnImage>
           ))}
         </Carousel>
+
         <div>
           <strong>County:</strong>
           {county}
